@@ -5,9 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('All Employees') }}</div>
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h2>{{ __('All Employees') }}</h2>
+                        <div class="ml-auto">
+                            <a href={{ route('employees.create') }} class="btn btn-outline-secondary">Add Employee</a>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card-body">
+                    @include('layouts._messages')
                     <div class="media">
                         <div class="media-body">
                         <table class="table table-sm">
@@ -33,7 +41,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                {{ $employees->links() }}
+                                <!--{{ $employees->links() }}-->
                             </tbody>
                         </table>
                         </div>

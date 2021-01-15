@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddEmployeeRequest;
 
 class EmployeesController extends Controller
 {
@@ -14,7 +15,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest()->paginate(5);
+        $employees = Employee::latest()->paginate(10);
 
         return view('employees.index', compact('employees'));
     }
@@ -26,7 +27,9 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        //
+        $employee = new Employee();
+
+        return view('employees.create', compact('employee'));
     }
 
     /**
@@ -35,9 +38,10 @@ class EmployeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddEmployeeRequest $request)
     {
-        //
+        $request->user()->employees()->create($request->all());
+        return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
     }
 
     /**
