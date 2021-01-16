@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class Penalty extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['name', 'degree', 'title'];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
-
-    public function penalties() {
-        return $this->belongsToMany(Penalty::class, 'penalty_employees');
+    
+    public function employees() {
+        return $this->belongsToMany('Employee', 'penalty_employees');
     }
 }
