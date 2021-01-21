@@ -15,6 +15,10 @@ class Employee extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function decisions() {
+        return $this->belongsToMany(Decision::class, 'decision_employees');
+    }
+
     public function penalties() {
         return $this->belongsToMany(Penalty::class, 'penalty_employees');
     }

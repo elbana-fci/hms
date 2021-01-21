@@ -24,13 +24,8 @@ class PenaltyFactory extends Factory
         return [
             'penalty' => $this->faker->text(),
             'penalty_reason' => $this->faker->text(),
-            'penalty' => $this->faker->text(),
-            'execution' => $this->faker->boolean(),
-            'execution_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
-            'issuer' => $this->faker->userName(),
-            'issue_number' => rand(5, 10),
             'user_id' => \App\Models\User::pluck('id')->random(),
-            'judgement_id' => rand(0, 5),
+            'decision_id' => 1
         ];
     }
 }

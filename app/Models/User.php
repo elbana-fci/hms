@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function penalties() {
         return $this->hasMany(Penalty::class);
     }
+
+    public function decisions() {
+        return $this->hasMany(Decision::class);
+    }
 }

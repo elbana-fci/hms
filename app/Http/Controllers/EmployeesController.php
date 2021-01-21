@@ -52,7 +52,9 @@ class EmployeesController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        $penalties = Employee::find($employee->id)->penalties;
+
+        return view('employees.show', compact('employee', 'penalties'));
     }
 
     /**

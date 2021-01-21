@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenaltyEmployeesTable extends Migration
+class CreateDecisionEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreatePenaltyEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('penalty_employees', function (Blueprint $table) {
+        Schema::create('decision_employees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('employee_id');
-            $table->unsignedBigInteger('penalty_id');
-            $table->boolean('executed');
-            $table->date('execution_date');
+            $table->unsignedBigInteger('decision_id');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('penalty_id')->references('id')->on('penalties');
-            
+            $table->foreign('decision_id')->references('id')->on('decisions');
         });
     }
 
@@ -34,6 +31,6 @@ class CreatePenaltyEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penalty_employees');
+        Schema::dropIfExists('decision_employees');
     }
 }

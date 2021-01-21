@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Penalty extends Model
+class Decision extends Model
 {
     use HasFactory;
 
@@ -13,12 +13,8 @@ class Penalty extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function decision() {
-        return $this->belongsTo(Decision::class);
-    }
-    
     public function employees() {
-        return $this->belongsToMany(Employee::class, 'penalty_employees');
+        return $this->belongsToMany(Employee::class, 'decision_employees');
     }
 
 }

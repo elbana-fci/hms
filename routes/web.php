@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\PenaltiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('employees', EmployeesController::class);
+Route::resource('penalties', PenaltiesController::class);
 
 Auth::routes();
 
