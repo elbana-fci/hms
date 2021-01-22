@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="decision-date">Decision Date</label>
-                            <input type="date" min="0" max="4294967295" name="decision_date" id="decision-date" class="form-control {{ $errors->has('judgement_number') ? 'is-invalid' : '' }}">
+                            <input type="date" min="0" max="4294967295" name="decision_date" id="decision-date" class="form-control {{ $errors->has('decision_date') ? 'is-invalid' : '' }}">
 
                             @if($errors->has('decision_date'))
                                 <div class="invalid-feedback">

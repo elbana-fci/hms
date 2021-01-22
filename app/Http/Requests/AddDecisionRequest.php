@@ -24,9 +24,10 @@ class AddDecisionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|max:30',
-            'title'  => 'required',
-            'degree' => 'required'
+            'decision_number'   => 'required',
+            'judgement_number'  => 'required',
+            'decision_date'     => 'required',
+            'issuing_authority' => 'required'
         ];
     }
 }

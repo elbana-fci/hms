@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Decision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AddDecisionRequest;
 
 class DecisionsController extends Controller
 {
@@ -37,9 +38,10 @@ class DecisionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddDecisionRequest $request)
     {
-        //
+        $request->user()->decisions()->create($request->all());
+        return redirect()->route('decisions.index')->with('success', 'Your data has been submitted');
     }
 
     /**
