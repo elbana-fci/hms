@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penalty;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddPenaltyRequest;
 use Illuminate\Support\Facades\DB;
 
 class PenaltiesController extends Controller
@@ -47,9 +48,9 @@ class PenaltiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddPenaltyRequest $request)
     {
-        //
+        $request->user()->penalties()->create($request->all());
     }
 
     /**

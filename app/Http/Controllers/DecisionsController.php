@@ -40,8 +40,15 @@ class DecisionsController extends Controller
      */
     public function store(AddDecisionRequest $request)
     {
-        $request->user()->decisions()->create($request->all());
-        return redirect()->route('decisions.index')->with('success', 'Your data has been submitted');
+        $decision = $request->user()->decisions()->create($request->all());
+        //return redirect()->route('decisions.index')->with('success', 'Your data has been submitted');
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Success",
+                'decision' => $decision
+            ]);
+        }
+
     }
 
     /**
@@ -88,4 +95,5 @@ class DecisionsController extends Controller
     {
         //
     }
+
 }

@@ -9,6 +9,8 @@ class Penalty extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['penalty', 'penalty_reason', 'decision_id'];
+
     public function user() {
         return $this->belongsTo(User::class);
     }

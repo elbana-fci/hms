@@ -7,62 +7,48 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2>{{ __('Add Employee') }}</h2>
+                        <h2>{{ __('Add Penalty') }}</h2>
                         <div class="ml-auto">
-                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back to all Employee</a>
+                            <a href="{{ route('penalties.index') }}" class="btn btn-outline-secondary">Back to all Penalties</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('employees.store') }}" method="post">
+                    <form action="{{ route('penalties.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="employee-name">Name</label>
-                            <input type="text" name="name" id="employee-name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}">
+                            <label for="penalty">Penalty</label>
+                            <input type="text" name="penalty" id="penalty" class="form-control {{ $errors->has('penalty') ? 'is-invalid' : '' }}">
 
-                            @if($errors->has('name'))
+                            @if($errors->has('penalty'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('name') }}</strong>
+                                    <strong>{{ $errors->first('penalty') }}</strong>
                                 </div>
                             @endif
                         </div>
                         <div class="form-group">
-                            @php 
-                                $titles = array('Doctor','Pharmacist', 'Employee');
-                            @endphp
-                            <label for="employee-title">Title</label>
-                            <select name="title" id="employee-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
-                                @foreach($titles as $title)
-                                    <option value="{{ $title }}">{{ $title }}</option>
-                                @endforeach
-                            </select>
+                            <label for="penalty-reason">Penalty Reason</label>
+                            <input type="text" name="penalty_reason" id="penalty-reason" class="form-control {{ $errors->has('penalty_reason') ? 'is-invalid' : '' }}">
 
-                            @if($errors->has('title'))
+                            @if($errors->has('penalty_reason'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('title') }}</strong>
+                                    <strong>{{ $errors->first('penalty_reason') }}</strong>
                                 </div>
                             @endif
                         </div>
                         <div class="form-group">
-                            @php 
-                                $degrees = array('First','Second', 'Third', 'Forth', 'Fifth');
-                            @endphp
-                            <label for="employee-degree">Degree</label>
-                            <select name="degree" id="employee-degree" class="form-control {{ $errors->has('degree') ? 'is-invalid' : '' }}">
-                                @foreach($degrees as $degree)
-                                    <option value="{{ $degree }}">{{ $degree }}</option>
-                                @endforeach
-                            </select>
+                            <label for="decision-id">Decision id</label>
+                            <input type="number" name="decision_id" id="decision-id" class="form-control {{ $errors->has('decision_id') ? 'is-invalid' : '' }}">
 
-                            @if($errors->has('degree'))
+                            @if($errors->has('decision_id'))
                                 <div class="invalid-feedback">
-                                    <strong>{{ $errors->first('degree') }}</strong>
+                                    <strong>{{ $errors->first('decision_id') }}</strong>
                                 </div>
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Add Employee</button>
+                            <button type="submit" class="btn btn-outline-primary btn-lg">Add Penalty</button>
                         </div>
                     </form>
                 </div>
