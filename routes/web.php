@@ -30,6 +30,8 @@ Route::resource('employees', EmployeesController::class);
 Route::resource('penalties', PenaltiesController::class);
 Route::resource('decisions', DecisionsController::class);
 
+Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

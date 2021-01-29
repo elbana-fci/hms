@@ -50,7 +50,14 @@ class PenaltiesController extends Controller
      */
     public function store(AddPenaltyRequest $request)
     {
-        $request->user()->penalties()->create($request->all());
+        $penalty = $request->user()->penalties()->create($request->all());
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Success",
+                'penalty' => $penalty
+            ]);
+        }
     }
 
     /**

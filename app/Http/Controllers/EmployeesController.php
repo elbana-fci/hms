@@ -17,7 +17,18 @@ class EmployeesController extends Controller
     {
         $employees = Employee::latest()->paginate(10);
 
-        return view('employees.index', compact('employees'));
+        return $employees;
+
+        //return view('employees.index', compact('employees'));
+    }
+
+    public function getAllEmployees()
+    {
+        $employees = Employee::All(['name']);
+
+        return $employees;
+
+        //retrive name only
     }
 
     /**
@@ -40,8 +51,21 @@ class EmployeesController extends Controller
      */
     public function store(AddEmployeeRequest $request)
     {
-        $request->user()->employees()->create($request->all());
-        return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
+
+        $employee = $request->user()->employees()->create($request->except(['decision_id']));
+
+        $decision_id = $request->input('decision_id');
+
+        $employee->decisions()->attach($decision_id);
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Success",
+                'employee' => $employee
+            ]);
+        }
+
+        //return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
     }
 
     /**

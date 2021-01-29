@@ -26,7 +26,8 @@ class AddEmployeeRequest extends FormRequest
         return [
             'name'   => 'required|max:30',
             'title'  => 'required',
-            'degree' => 'required'
+            'degree' => 'required',
+            'decision_id' => 'required'
         ];
     }
 }

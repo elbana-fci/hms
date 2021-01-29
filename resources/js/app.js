@@ -20,8 +20,6 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('decision', require('./components/Decision.vue').default);
-Vue.component('newdecision', require('./components/NewDecision.vue').default);
-Vue.component('assign', require('./components/Assign.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

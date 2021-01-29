@@ -41,16 +41,13 @@
 	            </div>
 	        </div>
 	    </div>
-
-	    <div v-if="editing" class="row justify-content-center">
+<!-- v-if="editing" -->
+	    <div  class="row justify-content-center">
 	        <div class="col-md-12">
 	            <div class="card">
 	                <div class="card-header">
 	                    <div class="d-flex align-items-center">
 	                        <h2>Add Penalties</h2>
-	                        <div class="ml-auto">
-	                            <a href="" class="btn btn-outline-secondary">Back to all Employee</a>
-	                        </div>
 	                    </div>
 	                </div>
 
@@ -65,7 +62,7 @@
 	                            <input type="text" name="penalty_reason" id="employee-name" v-model="penalty_reason" class="form-control">
 	                        </div>
 	                        <div class="form-group">
-	                            <button type="submit" class="btn btn-outline-primary btn-lg">Add Penalty</button>
+	                            <button type="submit" :disabled="!decision_id" class="btn btn-outline-primary btn-lg">Add Penalty</button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -79,20 +76,19 @@
 	                <div class="card-header">
 	                    <div class="d-flex align-items-center">
 	                        <h2>Add Employee</h2>
-	                        <div class="ml-auto">
-	                            <a href="" class="btn btn-outline-secondary">Back to all Employee</a>
-	                        </div>
 	                    </div>
 	                </div>
 
 	                <div class="card-body">
-	                    <form @submit.prevent="addEmployee" method="post">
+	                    <form @submit.prevent="" method="post">
 	                        <div class="form-group">
-	                            <label for="employee-name">Name</label>
-	                            <input type="text" name="name" id="employee-name" v-model="name" class="form-control">
+	                            <label for="issuing-authority">Name</label>
+	                            <select name="issuing_authority" id="issuing-authority" v-model="employees" class="form-control">
+	                            	<option v-for="employee in employees">{{ employee.name }}</option>
+	                            </select>
 	                        </div>
 	                        <div class="form-group">
-	                            <button type="submit" class="btn btn-outline-primary btn-lg">Add Employee</button>
+	                            <button type="submit" :disabled="!penalty_id" class="btn btn-outline-primary btn-lg">Add Employee</button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -103,18 +99,23 @@
 </template>
 <script>
 export default {
-	props: ['decision_id'],
+	props: ['decision_id', 'penalty_id', 'employee_id'],
 
 	methods: {
+
+		fetch (endpoint) {
+			axios.get(endpoint)
+			.then(({data}) => {
+				this.employees.push(...data.data)
+			});
+			},
+
 		addDecision () {
 			axios.post(`/decisions`, {
 				decision_number: this.decision_number,
 				judgement_number: this.judgement_number,
 				decision_date: this.decision_date,
 				issuing_authority: this.decision.issuing_authority
-			})
-			.catch(error => {
-				this.$toast.error(error.response.data.message, "Error");
 			})
 			.then(res =>
 				this.decision_id = res.data.decision['id']
@@ -129,7 +130,10 @@ export default {
 				penalty_reason: this.penalty_reason,
 				user_id: 1,
 				decision_id: this.decision_id
-			});
+			})
+			.then(res =>
+				this.penalty_id = res.data.penalty['id']
+			);
 
 			this.addEmp = true;
 		},
@@ -139,15 +143,11 @@ export default {
 				name: this.name,
 				degree: 'First',
 				title: 'test',
-				penalty: 0
+				decision_id: this.decision_id
 			})
-			.catch(error => {
-				this.$toast.error(error.response.data.message, "Error");
-			})
-			.then(({data}) => {
-				this.$toast.success(data.message, 'Success');
-				this.name = '';
-			})
+			.then(res =>
+				this.employee_id = res.data.employee['id']
+			);
 		}
 	},
 
@@ -157,9 +157,14 @@ export default {
 				issuing_authority: ''
 			},
 			editing: false,
-			addEmp: false,
-			issuing_authority: ['Hospital','Government', 'Department']
+			addEmp: true,
+			issuing_authority: ['Hospital','Government', 'Department'],
+			employees: []
 		}
+	},
+
+	created () {
+		this.fetch(`/employees`);
 	},
 
 	computed: {
