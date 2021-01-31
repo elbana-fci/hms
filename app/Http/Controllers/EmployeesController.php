@@ -17,14 +17,14 @@ class EmployeesController extends Controller
     {
         $employees = Employee::latest()->paginate(10);
 
-        return $employees;
+        //return $employees;
 
-        //return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees'));
     }
 
     public function getAllEmployees()
     {
-        $employees = Employee::All(['name']);
+        $employees = Employee::All();
 
         return $employees;
 

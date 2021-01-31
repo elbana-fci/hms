@@ -18,6 +18,15 @@ class DecisionsController extends Controller
     {
         $decisions = DB::table('decisions')->get();
         return view('decisions.index', compact('decisions'));
+
+    }
+
+    public function getAllDecisions()
+    {
+        $decisions = Decision::All();
+        //return view('decisions.index', compact('decisions'));
+
+        return $decisions;
     }
 
     /**

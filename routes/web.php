@@ -31,6 +31,7 @@ Route::resource('penalties', PenaltiesController::class);
 Route::resource('decisions', DecisionsController::class);
 
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
+Route::get('getAllDecisions', [DecisionsController::class, 'getAllDecisions']);
 
 Auth::routes();
 

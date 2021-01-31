@@ -17,8 +17,8 @@ class CreatePenaltyEmployeesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('penalty_id');
-            $table->boolean('executed');
-            $table->date('execution_date');
+            $table->boolean('executed')->default(0);
+            $table->date('execution_date')->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');

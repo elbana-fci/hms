@@ -1962,12 +1962,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     fetch: function fetch(endpoint) {
       var _this = this;
 
-      axios.get(endpoint).then(function (_ref) {
+      axios.get(endpoint).then(function (res) {
         var _this$employees;
 
-        var data = _ref.data;
-
-        (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(data.data));
+        return (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
       });
     },
     addDecision: function addDecision() {
@@ -2017,11 +2015,180 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       editing: false,
       addEmp: true,
       issuing_authority: ['Hospital', 'Government', 'Department'],
-      employees: []
+      employees: [],
+      employee: {
+        name: ''
+      }
     };
   },
   created: function created() {
-    this.fetch("/employees");
+    this.fetch("/getAllEmployees");
+  },
+  computed: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
+  methods: {
+    fetchDecisions: function fetchDecisions(endpoint) {
+      var _this = this;
+
+      axios.get(endpoint).then(function (res) {
+        var _this$decisions;
+
+        return (_this$decisions = _this.decisions).push.apply(_this$decisions, _toConsumableArray(res.data));
+      });
+    },
+    fetch: function fetch(endpoint) {
+      var _this2 = this;
+
+      axios.get(endpoint).then(function (res) {
+        var _this2$employees;
+
+        return (_this2$employees = _this2.employees).push.apply(_this2$employees, _toConsumableArray(res.data));
+      });
+    },
+    addDecision: function addDecision() {
+      var _this3 = this;
+
+      axios.post("/decisions", {
+        decision_number: this.decision_number,
+        judgement_number: this.judgement_number,
+        decision_date: this.decision_date,
+        issuing_authority: this.decision.issuing_authority
+      }).then(function (res) {
+        return _this3.decision_id = res.data.decision['id'];
+      });
+      this.editing = true;
+    },
+    addPenalty: function addPenalty() {
+      var _this4 = this;
+
+      axios.post("/penalties", {
+        penalty: this.penalty,
+        penalty_reason: this.penalty_reason,
+        user_id: 1,
+        decision_id: this.decision.id,
+        empIDs: this.selected
+      }).then(function (res) {
+        return _this4.penalty_id = res.data.penalty['id'];
+      });
+      this.addEmp = true;
+    },
+    addEmployee: function addEmployee() {
+      var _this5 = this;
+
+      axios.post("/employees", {
+        name: this.name,
+        degree: 'First',
+        title: 'test',
+        decision_id: this.decision_id
+      }).then(function (res) {
+        return _this5.employee_id = res.data.employee['id'];
+      });
+    }
+  },
+  data: function data() {
+    return {
+      penalty: null,
+      penalty_reason: null,
+      decision: {
+        issuing_authority: '',
+        id: ''
+      },
+      editing: false,
+      addEmp: true,
+      issuing_authority: ['Hospital', 'Government', 'Department'],
+      decisions: [],
+      employees: [],
+      selected: [],
+      options: [{
+        text: 'One',
+        value: 'A'
+      }, {
+        text: 'Two',
+        value: 'B'
+      }, {
+        text: 'Three',
+        value: 'C'
+      }]
+    };
+  },
+  created: function created() {
+    this.fetch("/getAllEmployees");
+    this.fetchDecisions("/getAllDecisions");
+    this.empIDs = [1, 2];
   },
   computed: {}
 });
@@ -2053,6 +2220,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('decision', __webpack_require__(/*! ./components/Decision.vue */ "./resources/js/components/Decision.vue").default);
+Vue.component('penalty', __webpack_require__(/*! ./components/Penalty.vue */ "./resources/js/components/Penalty.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -37460,6 +37628,45 @@ component.options.__file = "resources/js/components/Decision.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Penalty.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Penalty.vue ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Penalty.vue?vue&type=template&id=e7ba1524& */ "./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524&");
+/* harmony import */ var _Penalty_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Penalty.vue?vue&type=script&lang=js& */ "./resources/js/components/Penalty.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Penalty_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Penalty.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Decision.vue?vue&type=script&lang=js&":
 /*!***********************************************************************!*\
   !*** ./resources/js/components/Decision.vue?vue&type=script&lang=js& ***!
@@ -37476,6 +37683,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Penalty.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Penalty.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Penalty_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Penalty.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Penalty_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Decision.vue?vue&type=template&id=427bf747&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/Decision.vue?vue&type=template&id=427bf747& ***!
@@ -37489,6 +37712,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Decision_vue_vue_type_template_id_427bf747___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Decision_vue_vue_type_template_id_427bf747___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Decision.vue?vue&type=template&id=427bf747& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Decision.vue?vue&type=template&id=427bf747&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Penalty_vue_vue_type_template_id_e7ba1524___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Penalty.vue?vue&type=template&id=e7ba1524& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524&");
 
 
 /***/ }),
@@ -37823,8 +38063,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.employees,
-                              expression: "employees"
+                              value: _vm.employee.name,
+                              expression: "employee.name"
                             }
                           ],
                           staticClass: "form-control",
@@ -37842,9 +38082,13 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.employees = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
+                              _vm.$set(
+                                _vm.employee,
+                                "name",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
                             }
                           }
                         },
@@ -37926,6 +38170,246 @@ var staticRenderFns = [
       _c("div", { staticClass: "d-flex align-items-center" }, [
         _c("h2", [_vm._v("Add Employee")])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=template&id=e7ba1524& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render,
+/* harmony export */   "staticRenderFns": () => /* binding */ staticRenderFns
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                attrs: { method: "post" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.addPenalty($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "issuing-authority" } }, [
+                    _vm._v("Decision #")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.decision.id,
+                          expression: "decision.id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "issuing_authority",
+                        id: "issuing-authority"
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.decision,
+                            "id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    _vm._l(_vm.decisions, function(decision) {
+                      return _c("option", [_vm._v(_vm._s(decision.id))])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-n" } }, [
+                    _vm._v("Employee Name")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selected,
+                          expression: "selected"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "employee-n",
+                        id: "employee-n",
+                        multiple: ""
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selected = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.employees, function(employee) {
+                      return _c(
+                        "option",
+                        { domProps: { value: employee.id } },
+                        [_vm._v(_vm._s(employee.name))]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v(_vm._s(_vm.selected))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-name" } }, [
+                    _vm._v("Penalty")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.penalty,
+                        expression: "penalty"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "penalty",
+                      id: "employee-name"
+                    },
+                    domProps: { value: _vm.penalty },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.penalty = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-name" } }, [
+                    _vm._v("Reason")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.penalty_reason,
+                        expression: "penalty_reason"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "penalty_reason",
+                      id: "employee-name"
+                    },
+                    domProps: { value: _vm.penalty_reason },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.penalty_reason = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("h2", [_vm._v("Add Penalties")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary btn-lg",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("Add Penalty")]
+      )
     ])
   }
 ]

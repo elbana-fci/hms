@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penalty;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddPenaltyRequest;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,17 @@ class PenaltiesController extends Controller
      */
     public function store(AddPenaltyRequest $request)
     {
-        $penalty = $request->user()->penalties()->create($request->all());
+        //$employee = Employee::find(3);
+
+        $penalty = $request->user()->penalties()->create($request->except(['empIDs']));
+
+        //$decision_id = $request->input('decision_id');
+
+        $empIDs = $request->input('empIDs');
+
+        //print_r($employee);
+        //$employee->decisions()->attach($decision_id);
+        $penalty->employees()->attach($empIDs);
 
         if($request->expectsJson()){
             return response()->json([

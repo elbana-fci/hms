@@ -83,7 +83,7 @@
 	                    <form @submit.prevent="" method="post">
 	                        <div class="form-group">
 	                            <label for="issuing-authority">Name</label>
-	                            <select name="issuing_authority" id="issuing-authority" v-model="employees" class="form-control">
+	                            <select name="issuing_authority" id="issuing-authority" v-model="employee.name" class="form-control">
 	                            	<option v-for="employee in employees">{{ employee.name }}</option>
 	                            </select>
 	                        </div>
@@ -105,10 +105,9 @@ export default {
 
 		fetch (endpoint) {
 			axios.get(endpoint)
-			.then(({data}) => {
-				this.employees.push(...data.data)
-			});
-			},
+			.then(res => 
+				this.employees.push(...res.data)
+			);},
 
 		addDecision () {
 			axios.post(`/decisions`, {
@@ -159,12 +158,15 @@ export default {
 			editing: false,
 			addEmp: true,
 			issuing_authority: ['Hospital','Government', 'Department'],
-			employees: []
+			employees: [],
+			employee: {
+				name: ''
+			}
 		}
 	},
 
 	created () {
-		this.fetch(`/employees`);
+		this.fetch(`/getAllEmployees`);
 	},
 
 	computed: {
