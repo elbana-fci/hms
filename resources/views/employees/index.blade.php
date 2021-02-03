@@ -32,7 +32,7 @@
                                 @foreach($employees as $employee)
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td><a href="{{ route('employees.show', $employee->id) }}">{{ $employee->name }}</a></td>
+                                        <td><a href="{{ route('employeeRecords', $employee->id) }}">{{ $employee->name }}</a></td>
                                         <td>{{ $employee->degree }}</td>
                                         <td>{{ $employee->title }}</td>
                                         <td>

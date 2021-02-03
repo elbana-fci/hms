@@ -16,15 +16,15 @@
 	                    <form @submit.prevent="addDecision" method="post">
 	                        <div class="form-group">
 	                            <label for="decision-number">Decision Number</label>
-	                            <input type="number" min="0" max="4294967295" name="decision_number" id="decision-number" v-model="decision_number" class="form-control">
+	                            <input type="number" min="0" max="4294967295" name="decision_number" required id="decision-number" v-model="decision_number" class="form-control">
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="judgement-number">Judgement Number</label>
-	                            <input type="number" min="0" max="4294967295" name="judgement_number" id="judgement-number" v-model="judgement_number" class="form-control">
+	                            <input type="number" min="0" max="4294967295" name="judgement_number" required id="judgement-number" v-model="judgement_number" class="form-control">
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="decision-date">Decision Date</label>
-	                            <input type="date" min="0" max="4294967295" name="decision_date" id="decision-date" v-model="decision_date" class="form-control">
+	                            <input type="date" min="0" max="4294967295" name="decision_date" required id="decision-date" v-model="decision_date" class="form-control">
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="issuing-authority">Issuing Authority</label>
@@ -99,9 +99,12 @@ export default {
 				decision_date: this.decision_date,
 				issuing_authority: this.decision.issuing_authority
 			})
-			.then(res =>
-				this.decision_id = res.data.decision['id']
-			);
+			.then(res => {
+				this.decision_id = res.data.decision['id'];
+				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
+			}).catch(err => {
+				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
+			});
 
 			this.editing = true;
 		},

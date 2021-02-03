@@ -65,13 +65,8 @@ class EmployeesController extends Controller
      */
     public function show(Employee $employee)
     {
-        $penalties = Employee::find($employee->id)->penalties;
-
-        //$penalties = DB::table('penalties');
-
-        //return view('employees.show', compact('employee', 'penalties'));
-
-        return $penalties;
+        /*$penalties = Employee::find($employee->id)->penalties;
+        return view('employees.show', compact('employee', 'penalties'));*/
     }
 
     public function employeeRecords($employeeID)
