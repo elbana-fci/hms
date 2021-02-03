@@ -31,7 +31,6 @@
 	                            <select name="issuing_authority" id="issuing-authority" v-model="decision.issuing_authority" class="form-control">
 	                            	<option v-for="authority in issuing_authority">{{ authority }}</option>
 	                            </select>
-	                            <p>issue: {{ decision.issuing_authority }}</p>
 	                        </div>
 	                        <div class="form-group">
 	                            <button type="submit" class="btn btn-outline-primary btn-lg">Create Decision</button>
@@ -41,7 +40,7 @@
 	            </div>
 	        </div>
 	    </div>
-<!-- v-if="editing" -->
+		<!-- v-if="editing" -->
 	    <div  class="row justify-content-center">
 	        <div class="col-md-12">
 	            <div class="card">
@@ -52,7 +51,16 @@
 	                </div>
 
 	                <div class="card-body">
+	                	<div>Show all penalties</div>
+	                	<p v-for="penalty in penalties">{{ penalty }}</p>
 	                    <form @submit.prevent="addPenalty" method="post">
+	                        <div class="form-group">
+	                            <label for="employee-n">Employee Name</label>
+	                            <select name="employee-n" id="employee-n" v-model="selected" multiple="" class="form-control">
+	                            	<option v-for="employee in employees" v-bind:value="employee.id">{{ employee.name }}</option>
+	                            </select>
+	                            <h5>{{ selected }}</h5>
+	                        </div>
 	                        <div class="form-group">
 	                            <label for="employee-name">Penalty</label>
 	                            <input type="text" name="penalty" id="employee-name" v-model="penalty" class="form-control">
@@ -69,37 +77,11 @@
 	            </div>
 	        </div>
 	    </div>
-
-	    <div v-if="addEmp" class="row justify-content-center">
-	        <div class="col-md-12">
-	            <div class="card">
-	                <div class="card-header">
-	                    <div class="d-flex align-items-center">
-	                        <h2>Add Employee</h2>
-	                    </div>
-	                </div>
-
-	                <div class="card-body">
-	                    <form @submit.prevent="" method="post">
-	                        <div class="form-group">
-	                            <label for="issuing-authority">Name</label>
-	                            <select name="issuing_authority" id="issuing-authority" v-model="employee.name" class="form-control">
-	                            	<option v-for="employee in employees">{{ employee.name }}</option>
-	                            </select>
-	                        </div>
-	                        <div class="form-group">
-	                            <button type="submit" :disabled="!penalty_id" class="btn btn-outline-primary btn-lg">Add Employee</button>
-	                        </div>
-	                    </form>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
 	</div>
 </template>
 <script>
 export default {
-	props: ['decision_id', 'penalty_id', 'employee_id'],
+	props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
 
 	methods: {
 
@@ -107,7 +89,8 @@ export default {
 			axios.get(endpoint)
 			.then(res => 
 				this.employees.push(...res.data)
-			);},
+			);
+		},
 
 		addDecision () {
 			axios.post(`/decisions`, {
@@ -128,24 +111,11 @@ export default {
 				penalty: this.penalty,
 				penalty_reason: this.penalty_reason,
 				user_id: 1,
-				decision_id: this.decision_id
+				decision_id: this.decision_id,
+				empIDs: this.selected
 			})
 			.then(res =>
-				this.penalty_id = res.data.penalty['id']
-			);
-
-			this.addEmp = true;
-		},
-
-		addEmployee () {
-			axios.post(`/employees`, {
-				name: this.name,
-				degree: 'First',
-				title: 'test',
-				decision_id: this.decision_id
-			})
-			.then(res =>
-				this.employee_id = res.data.employee['id']
+				this.penalty_id = res.data.penalty['id'],
 			);
 		}
 	},
@@ -156,12 +126,10 @@ export default {
 				issuing_authority: ''
 			},
 			editing: false,
-			addEmp: true,
 			issuing_authority: ['Hospital','Government', 'Department'],
 			employees: [],
-			employee: {
-				name: ''
-			}
+			selected: [],
+			penalties: []
 		}
 	},
 

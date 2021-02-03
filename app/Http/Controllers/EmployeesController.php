@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddEmployeeRequest;
+use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {
@@ -15,7 +16,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest()->paginate(10);
+        $employees = Employee::latest()->paginate(50);
 
         //return $employees;
 
@@ -52,20 +53,8 @@ class EmployeesController extends Controller
     public function store(AddEmployeeRequest $request)
     {
 
-        $employee = $request->user()->employees()->create($request->except(['decision_id']));
-
-        $decision_id = $request->input('decision_id');
-
-        $employee->decisions()->attach($decision_id);
-
-        if($request->expectsJson()){
-            return response()->json([
-                'message' => "Success",
-                'employee' => $employee
-            ]);
-        }
-
-        //return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
+        $request->user()->employees()->create($request->all());
+        return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
     }
 
     /**
@@ -78,7 +67,23 @@ class EmployeesController extends Controller
     {
         $penalties = Employee::find($employee->id)->penalties;
 
-        return view('employees.show', compact('employee', 'penalties'));
+        //$penalties = DB::table('penalties');
+
+        //return view('employees.show', compact('employee', 'penalties'));
+
+        return $penalties;
+    }
+
+    public function employeeRecords($employeeID)
+    {
+        $employee = Employee::find($employeeID);
+
+        $penalties = DB::table('penalties')
+        ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')->where('employee_id', $employeeID)
+        ->join('decisions', 'decisions.id', 'penalties.decision_id')
+        ->get();
+
+        return view('employees.employeeRecords', compact('employee', 'penalties'));
     }
 
     /**

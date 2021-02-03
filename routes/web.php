@@ -30,8 +30,11 @@ Route::resource('employees', EmployeesController::class);
 Route::resource('penalties', PenaltiesController::class);
 Route::resource('decisions', DecisionsController::class);
 
+
+Route::get('employees/employeeRecords/{id}', [EmployeesController::class, 'employeeRecords']);
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
 Route::get('getAllDecisions', [DecisionsController::class, 'getAllDecisions']);
+Route::get('getPenaltiesByDecision', [PenaltiesController::class, 'getPenaltiesByDecision']);
 
 Auth::routes();
 

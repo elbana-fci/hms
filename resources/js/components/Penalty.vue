@@ -119,19 +119,12 @@ export default {
 			decisions: [],
 			employees: [],
 			selected: [],
-			options: [
-		      { text: 'One', value: 'A' },
-		      { text: 'Two', value: 'B' },
-		      { text: 'Three', value: 'C' }
-		    ]
-
 		}
 	},
 
 	created () {
 		this.fetch(`/getAllEmployees`);
 		this.fetchDecisions(`/getAllDecisions`);
-		this.empIDs = [1,2];
 	},
 
 	computed: {

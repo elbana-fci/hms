@@ -19,7 +19,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Issuer</th>
+                                <th scope="col">issuing_authority</th>
                                 <th scope="col">Judge #</th>
                                 <th scope="col">Reason</th>
                                 <th scope="col">Penalty</th>
@@ -31,8 +31,11 @@
                             @foreach($penalties as $penalty)
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td><a href="">{{ $penalty['issuing_authority'] }}</a></td>
-                                    
+                                    <td><a href="">{{ $penalty->issuing_authority }}</a></td>
+                                    <td>{{ $penalty->judgement_number }}</td>
+                                    <td>{{ $penalty->penalty_reason }}</td>
+                                    <td>{{ $penalty->penalty }}</td>
+                                    <td>{{ $penalty->execution_date }}</td>
                                     <td>
                                         <a href="">Edit</a>
                                         <a href="">Delete</a>
