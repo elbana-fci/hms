@@ -26,16 +26,15 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('employees', EmployeesController::class);
-Route::resource('penalties', PenaltiesController::class);
-Route::resource('decisions', DecisionsController::class);
+Route::get('employeeRecords/{id}', [EmployeesController::class, 'employeeRecords'])
+->middleware(['auth'])->name('employeeRecords');
 
-
-Route::get('employeeRecords/{id}', [EmployeesController::class, 'employeeRecords'])->name('employeeRecords');
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
-Route::get('getAllDecisions', [DecisionsController::class, 'getAllDecisions']);
-Route::get('getPenaltiesByDecision', [PenaltiesController::class, 'getPenaltiesByDecision']);
+
+Route::resource('employees', EmployeesController::class)->middleware(['auth']);
+Route::resource('penalties', PenaltiesController::class)->middleware(['auth']);
+Route::resource('decisions', DecisionsController::class)->middleware(['auth']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -49,12 +49,6 @@ export default {
 	props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
 
 	methods: {
-		fetchDecisions (endpoint) {
-			axios.get(endpoint)
-			.then(res => 
-				this.decisions.push(...res.data)
-			);
-			},
 
 		fetch (endpoint) {
 			axios.get(endpoint)
@@ -116,7 +110,6 @@ export default {
 			editing: false,
 			addEmp: true,
 			issuing_authority: ['Hospital','Government','Department'],
-			decisions: [],
 			employees: [],
 			selected: [],
 		}
@@ -124,7 +117,6 @@ export default {
 
 	created () {
 		this.fetch(`/getAllEmployees`);
-		this.fetchDecisions(`/getAllDecisions`);
 	},
 
 	computed: {

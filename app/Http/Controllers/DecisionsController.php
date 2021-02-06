@@ -21,14 +21,6 @@ class DecisionsController extends Controller
 
     }
 
-    public function getAllDecisions()
-    {
-        $decisions = Decision::All();
-        //return view('decisions.index', compact('decisions'));
-
-        return $decisions;
-    }
-
     /**
      * Show the form for creating a new resource.
      *
