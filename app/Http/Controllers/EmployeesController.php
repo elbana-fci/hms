@@ -89,7 +89,7 @@ class EmployeesController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view('employees.edit', compact('employee'));
     }
 
     /**
@@ -99,9 +99,10 @@ class EmployeesController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(AddEmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+        return redirect()->route('employees.index')->with('success', 'Your data has been updated');
     }
 
     /**

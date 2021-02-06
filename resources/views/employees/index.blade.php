@@ -36,8 +36,8 @@
                                         <td>{{ $employee->degree }}</td>
                                         <td>{{ $employee->title }}</td>
                                         <td>
-                                            <a href="">Edit</a>
-                                            <a href="">Delete</a>
+                                            <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                            <a href="" class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

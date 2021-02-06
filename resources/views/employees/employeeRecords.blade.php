@@ -8,6 +8,7 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h2>{{ $employee->name }}</h2>
+                        <h2>{{ $employee->title }}</h2>
                         <div class="ml-auto">
                             <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back to all Employee</a>
                         </div>
