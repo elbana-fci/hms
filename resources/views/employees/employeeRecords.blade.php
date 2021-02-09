@@ -1,54 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container emp-records">
     <div class="row justify-content-center">
+        <div class="col-md-12 text-center"><h1>ﺻﺤﻴﻔﺔ ﺟﺰاءاﺕ</h1></div>
+        <div class="col-md-12"><p class="title">محافظة الفيوم <br/>مديرية الشئون الصحية <br/>مستشفى طامية المركزي</p><hr/></div>
+        <div class="col-md-6"><p class="emp-name">اﻻﺳﻢ : {{ $employee->name }}</p></div>
+        <div class="col-md-6"><p class="emp-title">اﻟﻮﻇﻴﻔﺔ : {{ $employee->title }}</p></div>
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>{{ $employee->name }}</h2>
-                        <h2>{{ $employee->title }}</h2>
-                        <div class="ml-auto">
-                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back to all Employee</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">issuing_authority</th>
-                                <th scope="col">Judge #</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Penalty</th>
-                                <th scope="col">Exec. Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($penalties as $penalty)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><a href="">{{ $penalty->issuing_authority }}</a></td>
-                                    <td>{{ $penalty->judgement_number }}</td>
-                                    <td>{{ $penalty->penalty_reason }}</td>
-                                    <td>{{ $penalty->penalty }}</td>
-                                    <td>{{ $penalty->execution_date }}</td>
-                                    <td>
-                                        <a href="">Edit</a>
-                                        <a href="">Delete</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <h5>Penalties: {{ count($penalties) }}</h5>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                  
+        <table class="table table-bordered table-dir">
+            <thead>
+                <tr>
+                    <th scope="col">{{ __('emp.issuing_authority') }}</th>
+                    <th scope="col">{{ __('emp.decision_number') }}</th>
+                    <th scope="col">{{ __('emp.decision_date') }}</th>
+                    <th scope="col">{{ __('emp.reason') }}</th>
+                    <th scope="col">{{ __('emp.penalty') }}</th>
+                    <th scope="col">{{ __('emp.execution_date') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($penalties as $penalty)
+                    <tr>
+                        <td>{{ $penalty->issuing_authority }}</td>
+                        <td>{{ $penalty->decision_number }}</td>
+                        <td>{{ $penalty->decision_date }}</td>
+                        <td>{{ $penalty->penalty_reason }}</td>
+                        <td>{{ $penalty->penalty }}</td>
+                        <td>{{ $penalty->execution_date }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <th>{{ __('emp.total') }}</th>
+                    <td colspan="5">{{ count($penalties) }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

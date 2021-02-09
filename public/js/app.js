@@ -1933,11 +1933,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
   methods: {
@@ -1981,7 +1976,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         decision_id: this.decision_id,
         empIDs: this.selected
       }).then(function (res) {
-        return _this3.penalty_id = res.data.penalty['id'];
+        _this3.$toast.success(res.data.message, "Success", {
+          timeout: 3000
+        });
+      })["catch"](function (err) {
+        _this3.$toast.error(err.response.data.message, "Error", {
+          timeout: 3000
+        });
       });
     }
   },
@@ -1991,10 +1992,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         issuing_authority: ''
       },
       editing: false,
-      issuing_authority: ['Hospital', 'Government', 'Department'],
+      issuing_authority: ['المستشفى', 'الإدارة', 'المديرية'],
       employees: [],
       selected: [],
-      penalties: []
+      penalties: [],
+      reemp: []
     };
   },
   created: function created() {
@@ -2077,26 +2079,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
   methods: {
-    fetchDecisions: function fetchDecisions(endpoint) {
+    fetch: function fetch(endpoint) {
       var _this = this;
 
       axios.get(endpoint).then(function (res) {
-        var _this$decisions;
+        var _this$employees;
 
-        return (_this$decisions = _this.decisions).push.apply(_this$decisions, _toConsumableArray(res.data));
-      });
-    },
-    fetch: function fetch(endpoint) {
-      var _this2 = this;
-
-      axios.get(endpoint).then(function (res) {
-        var _this2$employees;
-
-        return (_this2$employees = _this2.employees).push.apply(_this2$employees, _toConsumableArray(res.data));
+        return (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
       });
     },
     addDecision: function addDecision() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.post("/decisions", {
         decision_number: this.decision_number,
@@ -2104,12 +2097,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         decision_date: this.decision_date,
         issuing_authority: this.decision.issuing_authority
       }).then(function (res) {
-        return _this3.decision_id = res.data.decision['id'];
+        return _this2.decision_id = res.data.decision['id'];
       });
       this.editing = true;
     },
     addPenalty: function addPenalty() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.post("/penalties", {
         penalty: this.penalty,
@@ -2118,12 +2111,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         decision_id: this.decision.id,
         empIDs: this.selected
       }).then(function (res) {
-        return _this4.penalty_id = res.data.penalty['id'];
+        return _this3.penalty_id = res.data.penalty['id'];
       });
       this.addEmp = true;
     },
     addEmployee: function addEmployee() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.post("/employees", {
         name: this.name,
@@ -2131,7 +2124,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         title: 'test',
         decision_id: this.decision_id
       }).then(function (res) {
-        return _this5.employee_id = res.data.employee['id'];
+        return _this4.employee_id = res.data.employee['id'];
       });
     }
   },
@@ -2146,14 +2139,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       editing: false,
       addEmp: true,
       issuing_authority: ['Hospital', 'Government', 'Department'],
-      decisions: [],
       employees: [],
       selected: []
     };
   },
   created: function created() {
     this.fetch("/getAllEmployees");
-    this.fetchDecisions("/getAllDecisions");
   },
   computed: {}
 });
@@ -38162,9 +38153,14 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "decision-number" } }, [
-                        _vm._v("Decision Number")
-                      ]),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "item-dir",
+                          attrs: { for: "decision-number" }
+                        },
+                        [_vm._v("رقم القرار")]
+                      ),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -38198,7 +38194,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "judgement-number" } }, [
-                        _vm._v("Judgement Number")
+                        _vm._v("رقم القضية")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -38233,7 +38229,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "decision-date" } }, [
-                        _vm._v("Decision Date")
+                        _vm._v("تاريخ القرار")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -38268,7 +38264,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "issuing-authority" } }, [
-                        _vm._v("Issuing Authority")
+                        _vm._v("جهة الاصدار")
                       ]),
                       _vm._v(" "),
                       _c(
@@ -38328,158 +38324,147 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _vm._m(2),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("div", [_vm._v("Show all penalties")]),
-              _vm._v(" "),
-              _vm._l(_vm.penalties, function(penalty) {
-                return _c("p", [_vm._v(_vm._s(penalty))])
-              }),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  attrs: { method: "post" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.addPenalty($event)
-                    }
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                attrs: { method: "post" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.addPenalty($event)
                   }
-                },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "employee-n" } }, [
-                      _vm._v("Employee Name")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected,
-                            expression: "selected"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          name: "employee-n",
-                          id: "employee-n",
-                          multiple: ""
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selected = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      _vm._l(_vm.employees, function(employee) {
-                        return _c(
-                          "option",
-                          { domProps: { value: employee.id } },
-                          [_vm._v(_vm._s(employee.name))]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("h5", [_vm._v(_vm._s(_vm.selected))])
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-n" } }, [
+                    _vm._v("الموظفين")
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "employee-name" } }, [
-                      _vm._v("Penalty")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
+                  _c(
+                    "select",
+                    {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.penalty,
-                          expression: "penalty"
+                          value: _vm.selected,
+                          expression: "selected"
                         }
                       ],
                       staticClass: "form-control",
                       attrs: {
-                        type: "text",
-                        name: "penalty",
-                        id: "employee-name"
+                        name: "employee-n",
+                        id: "employee-n",
+                        multiple: ""
                       },
-                      domProps: { value: _vm.penalty },
                       on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.penalty = $event.target.value
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selected = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
                         }
                       }
-                    })
+                    },
+                    _vm._l(_vm.employees, function(employee) {
+                      return _c(
+                        "option",
+                        { domProps: { value: employee.id } },
+                        [_vm._v(_vm._s(employee.name))]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v(_vm._s(_vm.selected))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-name" } }, [
+                    _vm._v("الجزاء")
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "employee-name" } }, [
-                      _vm._v("Reason")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.penalty_reason,
-                          expression: "penalty_reason"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "penalty_reason",
-                        id: "employee-name"
-                      },
-                      domProps: { value: _vm.penalty_reason },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.penalty_reason = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "button",
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "btn btn-outline-primary btn-lg",
-                        attrs: { type: "submit", disabled: !_vm.decision_id }
-                      },
-                      [_vm._v("Add Penalty")]
-                    )
-                  ])
-                ]
-              )
-            ],
-            2
-          )
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.penalty,
+                        expression: "penalty"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "penalty",
+                      id: "employee-name"
+                    },
+                    domProps: { value: _vm.penalty },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.penalty = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "employee-name" } }, [
+                    _vm._v("السبب")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.penalty_reason,
+                        expression: "penalty_reason"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "penalty_reason",
+                      id: "employee-name"
+                    },
+                    domProps: { value: _vm.penalty_reason },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.penalty_reason = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary btn-lg",
+                      attrs: { type: "submit", disabled: !_vm.decision_id }
+                    },
+                    [_vm._v("أضف جزاء")]
+                  )
+                ])
+              ]
+            )
+          ])
         ])
       ])
     ])
@@ -38492,15 +38477,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("div", { staticClass: "d-flex align-items-center" }, [
-        _c("h2", [_vm._v("New Decision")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "ml-auto" }, [
-          _c(
-            "a",
-            { staticClass: "btn btn-outline-secondary", attrs: { href: "" } },
-            [_vm._v("Back to all Decisions")]
-          )
-        ])
+        _c("h2", [_vm._v("أضف قرار")])
       ])
     ])
   },
@@ -38515,7 +38492,7 @@ var staticRenderFns = [
           staticClass: "btn btn-outline-primary btn-lg",
           attrs: { type: "submit" }
         },
-        [_vm._v("Create Decision")]
+        [_vm._v("أضف قرار")]
       )
     ])
   },
@@ -38525,7 +38502,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("div", { staticClass: "d-flex align-items-center" }, [
-        _c("h2", [_vm._v("Add Penalties")])
+        _c("h2", [_vm._v("أضف جزاء")])
       ])
     ])
   }

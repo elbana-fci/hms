@@ -7,9 +7,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2>{{ __('Edit Employee') }}</h2>
+                        <h2>{{ __('emp.edit-emp') }}</h2>
                         <div class="ml-auto">
-                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back to all Employee</a>
+                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">{{ __('emp.all-emp-btn') }}</a>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             @php 
-                                $titles = array('Doctor','Pharmacist', 'Employee');
+                                $titles = array('دكتور','صيدلي', 'موظف');
                             @endphp
                             <label for="employee-title">Title</label>
                             <select name="title" id="employee-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             @php 
-                                $degrees = array('First','Second', 'Third', 'Forth', 'Fifth');
+                                $degrees = array('أولى','ثانية', 'ثالثة', 'رابعة', 'خامسة');
                             @endphp
                             <label for="employee-degree">Degree</label>
                             <select name="degree" id="employee-degree" class="form-control {{ $errors->has('degree') ? 'is-invalid' : '' }}">
@@ -63,7 +63,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Edit Employee</button>
+                            <button type="submit" class="btn btn-outline-primary btn-lg">{{ __('emp.edit-btn') }}</button>
                         </div>
                     </form>
                 </div>

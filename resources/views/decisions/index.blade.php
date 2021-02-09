@@ -7,9 +7,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2>{{ __('Decisions') }}</h2>
-                        <div class="ml-auto">
-                            <a href="{{ route('decisions.create') }}" class="btn btn-outline-secondary">Add Decision</a>
+                        <h2>{{ __('dec.decisions') }}</h2>
+                        <div class="item-dir">
+                            <a href="{{ route('decisions.create') }}" class="btn btn-outline-secondary">{{ __('dec.add-btn') }}</a>
                         </div>
                     </div>
                 </div>
@@ -18,21 +18,22 @@
                     @include('layouts._messages')
                     <div class="media">
                         <div class="media-body">
-                        <table class="table table-sm">
+                        <table class="table table-striped table-dir">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">decisions#</th>
-                                    <th scope="col">Judgement#</th>
-                                    <th scope="col">Decision Date</th>
-                                    <th scope="col">Issuing Authority</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('dec.serial-number') }}</th>
+                                    <th scope="col">{{ __('dec.decision-number') }}</th>
+                                    <th scope="col">{{ __('dec.judgement-number') }}</th>
+                                    <th scope="col">{{ __('dec.decision-date') }}</th>
+                                    <th scope="col">{{ __('dec.issuing-authority') }}</th>
+                                    <th scope="col">{{ __('dec.control') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 0; ?>
                                 @foreach($decisions as $decision)
                                     <tr>
-                                        <th scope="row">{{ $decision->id }}</th>
+                                        <th scope="row">{{ $i }}</th>
                                         <td>{{ $decision->decision_number }}</td>
                                         <td>{{ $decision->judgement_number }}</td>
                                         <td>{{ $decision->decision_date }}</td>
@@ -42,6 +43,7 @@
                                             <a href="">Delete</a>
                                         </td>
                                     </tr>
+                                    <?php $i++ ?>
                                 @endforeach
                             </tbody>
                         </table>

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'HMS') }}
+            {{ __('nav.app-name') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -9,20 +9,20 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav nav-dir">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                    <a class="nav-link" href="{{ route('employees.index') }}">{{ __('nav.employees') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('penalties.index') }}">Penalties</a>
+                    <a class="nav-link" href="{{ route('penalties.index') }}">{{ __('nav.penalties') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('decisions.index') }}">Decisions</a>
+                    <a class="nav-link" href="{{ route('decisions.index') }}">{{ __('nav.decisions') }}</a>
                 </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav item-dir">
                 <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
@@ -46,7 +46,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                {{ __('nav.logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

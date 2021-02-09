@@ -3,41 +3,33 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-12 penalties">
+            <h2>{{ __('pen.penalties') }}</h2>
             <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>{{ __('All Penalties') }}</h2>
-                        <div class="ml-auto">
-                            <a href="{{ route('penalties.create') }}" class="btn btn-outline-secondary">Add Penalty</a>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="card-body">
                     @include('layouts._messages')
                     <div class="media">
                         <div class="media-body">
-                        <table class="table table-sm">
+                        <table class="table table-striped table-dir">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Judgement#</th>
-                                    <th scope="col">Decision#</th>
-                                    <th scope="col">Decision Date</th>
-                                    <th scope="col">Gulity</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Penalty Reason</th>
-                                    <th scope="col">Penalty</th>
-                                    <th scope="col">Exec Date</th>
-                                    <th scope="col">Issuing Authority</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">{{ __('pen.serial-number') }}</th>
+                                    <th scope="col">{{ __('pen.judgement-number') }}</th>
+                                    <th scope="col">{{ __('pen.decision-number') }}</th>
+                                    <th scope="col">{{ __('pen.decision-date') }}</th>
+                                    <th scope="col">{{ __('pen.gulty-name') }}</th>
+                                    <th scope="col">{{ __('pen.gulty-title') }}</th>
+                                    <th scope="col">{{ __('pen.penalty-reason') }}</th>
+                                    <th scope="col">{{ __('pen.penalty') }}</th>
+                                    <th scope="col">{{ __('pen.execution-date') }}</th>
+                                    <th scope="col">{{ __('pen.issuing-authority') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $i = 0; ?>
                                 @foreach($penalties as $penalty)
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <td>{{ $i }}</td>
                                         <td>{{ $penalty->judgement_number }}</td>
                                         <td>{{ $penalty->decision_number }}</td>
                                         <td>{{ $penalty->decision_date }}</td>
@@ -47,11 +39,8 @@
                                         <td>{{ $penalty->penalty }}</td>
                                         <td>{{ $penalty->execution_date }}</td>
                                         <td>{{ $penalty->issuing_authority }}</td>
-                                        <td>
-                                            <a href="">Edit</a>
-                                            <a href="">Delete</a>
-                                        </td>
                                     </tr>
+                                    <?php $i++ ?>
                                 @endforeach
                             </tbody>
                         </table>

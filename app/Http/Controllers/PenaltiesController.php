@@ -56,16 +56,27 @@ class PenaltiesController extends Controller
 
         $empIDs = $request->input('empIDs');
         $decision_id = $request->input('decision_id');
+
+        $employeesInDecision = DB::table('decision_employees')->select('employee_id')->where('decision_id', $decision_id)->get();
+
+        $empIDsArray = array();
+        foreach ($employeesInDecision as $emp) {
+            array_push($empIDsArray, $emp->employee_id);
+        }
+
         $decision = Decision::find($decision_id);
-        
-        $decision->employees()->attach($empIDs);
+
+        $diff = array_diff($empIDs, $empIDsArray);
+        if(!empty($diff)){
+            $decision->employees()->attach($diff);
+        }
 
         $penalty->employees()->attach($empIDs);
 
         if($request->expectsJson()){
             return response()->json([
                 'message' => "Success",
-                'penalty' => $penalty
+                'penalty' => $employeesInDecision
             ]);
         }
     }
@@ -88,7 +99,18 @@ class PenaltiesController extends Controller
      */
     public function show(Penalty $penalty)
     {
-        //
+        /*$decn = 71;
+        $id = 1;
+        $employeesInDecision = DB::table('decision_employees')->select('employee_id')->where('decision_id', $decn)->get();
+
+        $IDs = array();
+        foreach ($employeesInDecision as $emp) {
+            array_push($IDs, $emp->employee_id);
+        }
+
+        if(!in_array($id, $IDs)){
+            echo "not exist";
+        } else{echo "exist";}*/
     }
 
     /**

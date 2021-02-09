@@ -6,3 +6,59 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+body{
+	direction: rtl;
+	text-align: right;
+}
+
+.nav-dir{
+	margin-left: auto !important;
+}
+.item-dir{
+	margin-right: auto !important;
+}
+.navbar-brand{
+	margin-right: 0;
+}
+.employees h2{
+	display: inline-block;
+	font-size: 1.6rem;
+}
+.employees .top-wrap{
+	display: flex;
+	margin-bottom: 25px;
+}
+.emp-records h1{
+	font-size: 15px;
+	font-weight: bold;
+	color: #777;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.emp-records .title, .emp-records .emp-name, .emp-records .emp-title{
+	text-align: right;
+	line-height: 1.5;
+}
+.table-dir{
+	text-align: center;
+}
+.penalties h2{
+	margin-bottom: 25px;
+}
+.card{
+	border: none;
+	box-shadow: 0 2px 4px #ececec;
+}
+.table thead th{
+	border-bottom: none;
+	vertical-align: middle;
+}
+.table th, .table td{
+	border-top: none;
+	vertical-align: middle;
+	padding: 0.50rem;
+}
+.table-striped tbody tr:nth-of-type(2n+1){
+	background-color: #f8f9fa;
+}
