@@ -73,10 +73,18 @@ class PenaltiesController extends Controller
 
         $penalty->employees()->attach($empIDs);
 
+        /*$gulty = DB::table('employees')
+                    ->whereIn('id', $empIDs)
+                    ->get();*/
+
+        $PenEmp = Penalty::find($penalty->id)->employees;
+
+
         if($request->expectsJson()){
             return response()->json([
                 'message' => "Success",
-                'penalty' => $employeesInDecision
+                'penalty' => $penalty,
+                'PenEmp' => $PenEmp
             ]);
         }
     }
@@ -111,6 +119,16 @@ class PenaltiesController extends Controller
         if(!in_array($id, $IDs)){
             echo "not exist";
         } else{echo "exist";}*/
+
+        $decision_id = 1;
+
+        $PenEmp = DB::table('penalties')
+        ->join('penalty_employees', 'penalty_employees.penalty_id', 'penalties.id')->where('decision_id', $decision_id)
+        ->join('employees', 'employees.id', 'penalty_employees.employee_id')
+        ->select('penalties.id', 'penalties.penalty', 'employees.name')
+        ->get()->groupBy('penalty');
+
+        return $PenEmp;
     }
 
     /**

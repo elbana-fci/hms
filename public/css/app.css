@@ -10974,4 +10974,26 @@ body {
   background-color: #f8f9fa;
 }
 
+.dec-stamp h3,
+.dec-stamp .title,
+.dec-stamp table {
+  margin-bottom: 1.25rem;
+}
+
+.dec-stamp .title {
+  font-size: 0.95rem;
+}
+
+.dec-signs {
+  font-weight: bold;
+}
+
+.dec-stamp .table thead th {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.dec-stamp {
+  text-align: right;
+}
+
 

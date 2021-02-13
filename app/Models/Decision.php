@@ -9,7 +9,7 @@ class Decision extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['decision_number', 'judgement_number', 'decision_date', 'issuing_authority'];
+    protected $fillable = ['decision_number', 'judgement_number', 'decision_date', 'issuing_authority', 'decision_content'];
 
     public function user() {
         return $this->belongsTo(User::class);

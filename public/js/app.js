@@ -1933,6 +1933,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
   methods: {
@@ -1942,7 +1954,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       axios.get(endpoint).then(function (res) {
         var _this$employees;
 
-        return (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
+        (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
       });
     },
     addDecision: function addDecision() {
@@ -1952,19 +1964,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         decision_number: this.decision_number,
         judgement_number: this.judgement_number,
         decision_date: this.decision_date,
-        issuing_authority: this.decision.issuing_authority
+        issuing_authority: this.decision.issuing_authority,
+        decision_content: CKEDITOR.instances.decisionContent.getData()
       }).then(function (res) {
         _this2.decision_id = res.data.decision['id'];
 
         _this2.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
+
+        _this2.editing = true;
       })["catch"](function (err) {
         _this2.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
-      this.editing = true;
     },
     addPenalty: function addPenalty() {
       var _this3 = this;
@@ -1976,6 +1990,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         decision_id: this.decision_id,
         empIDs: this.selected
       }).then(function (res) {
+        _this3.selected = "";
+        _this3.penalty = "";
+        _this3.penalty_reason = "";
+
+        _this3.penalties.push(res.data.PenEmp);
+
+        _this3.pens.push(res.data.penalty);
+
         _this3.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
@@ -1996,7 +2018,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       employees: [],
       selected: [],
       penalties: [],
-      reemp: []
+      pens: []
     };
   },
   created: function created() {
@@ -38310,6 +38332,44 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "item-dir",
+                          attrs: { for: "decisionContent" }
+                        },
+                        [_vm._v("صياغة القرار")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.decision_content,
+                            expression: "decision_content"
+                          }
+                        ],
+                        staticClass: "form-control ckeditor",
+                        attrs: {
+                          type: "text",
+                          name: "decision_content",
+                          required: "",
+                          id: "decisionContent"
+                        },
+                        domProps: { value: _vm.decision_content },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.decision_content = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _vm._m(1)
                   ]
                 )
@@ -38337,6 +38397,20 @@ var render = function() {
                 }
               },
               [
+                _vm._l(_vm.penalties, function(pen, index) {
+                  return _c(
+                    "ul",
+                    [
+                      _c("li", [_vm._v(_vm._s(_vm.pens[index].penalty))]),
+                      _vm._v(" "),
+                      _vm._l(pen, function(item) {
+                        return _c("ul", [_c("li", [_vm._v(_vm._s(item.name))])])
+                      })
+                    ],
+                    2
+                  )
+                }),
+                _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "employee-n" } }, [
                     _vm._v("الموظفين")
@@ -38453,16 +38527,41 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-primary btn-lg",
-                      attrs: { type: "submit", disabled: !_vm.decision_id }
-                    },
-                    [_vm._v("أضف جزاء")]
-                  )
+                  !_vm.penalty_id
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit", disabled: !_vm.decision_id }
+                        },
+                        [_vm._v("أضف جزاء")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.penalty_id
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit", disabled: !_vm.decision_id }
+                        },
+                        [_vm._v("أضف جزاء آخر")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.penalty_id
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "submit", disabled: !_vm.decision_id }
+                        },
+                        [_vm._v("انتهى")]
+                      )
+                    : _vm._e()
                 ])
-              ]
+              ],
+              2
             )
           ])
         ])
@@ -38488,10 +38587,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form-group" }, [
       _c(
         "button",
-        {
-          staticClass: "btn btn-outline-primary btn-lg",
-          attrs: { type: "submit" }
-        },
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("أضف قرار")]
       )
     ])

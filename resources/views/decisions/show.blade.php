@@ -2,54 +2,37 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>{{ $employee->name }}</h2>
-                        <div class="ml-auto">
-                            <a href="{{ route('employees.index') }}" class="btn btn-outline-secondary">Back to all Employee</a>
-                        </div>
-                    </div>
-                </div>
+    <div class="row justify-content-center dec-stamp">
+        <div class="col-md-12"><p class="title">محافظة الفيوم <br/>مديرية الشئون الصحية <br/>مستشفى طامية المركزي</p></div>
+        <h3>قرار رقم [{{ $decision->decision_number}}] لسنة ٢٠٢١</h3>
+        <div class="col-md-12"><p class="title">مدير عام المستشفى بعد الاطلاع على قانون الخدمة المدنية رقم 81 لسنة 2016 وعلى القضية المحلية رقم  [{{ $decision->judgement_number }}] والتي انتهت إلى قيد الواقعة مخالفة إدارية <br/>ضد كلأ من</p></div>
 
-                <div class="card-body">
-                    <!--<h2>{{ App\Models\Employee::find(1)->penalties }}</h2>
-                    <h2>{{ $penalties[0]['penalty'] }}</h2>-->
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Issuer</th>
-                                <th scope="col">Judge #</th>
-                                <th scope="col">Reason</th>
-                                <th scope="col">Penalty</th>
-                                <th scope="col">Exec. Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($penalties as $penalty)
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><a href="">{{ $penalty['issuer'] }}</a></td>
-                                    <td>{{ $penalty['judgement_id'] }}</td>
-                                    <td>{{ $penalty['penalty_reason'] }}</td>
-                                    <td>{{ $penalty['penalty'] }}</td>
-                                    <td>{{ $penalty['execution_date'] }}</td>
-                                    <td>
-                                        <a href="">Edit</a>
-                                        <a href="">Delete</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <h5>Penalties: {{ count($penalties) }}</h5>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <table class="table table-bordered table-dir">
+            <thead>
+                <tr>
+                    <th scope="col">{{ __('emp.name') }}</th>
+                    <th scope="col">{{ __('emp.title') }}</th>
+                    <th scope="col">{{ __('emp.degree') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($employees as $employee)
+                    <tr>
+                        <td>{{ $employee->name }}</td>
+                        <td>{{ $employee->title }}</td>
+                        <td>{{ $employee->degree }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="col-md-12"><p class="title">وذلك لأنهم بوصفهم و دائرة عملهم قد خرجوا على مقتضى الواجب الوظيفي على النحو التالي</p></div>
+        <div class="col-md-12 title">{!! $decision->decision_content !!}</div>
+        <div class="col-md-12"><p class="title">تحريرأ في</p></div>
+    </div>
+    <div class="row justify-content-center dec-signs">
+            <div class="col-md-3 text-center">مسئول الجزاءات</div>
+            <div class="col-md-3 text-center">مدير شئون العاملين</div>
+            <div class="col-md-3 text-center">مدير عام المستشفى</div>
     </div>
 </div>
 @endsection

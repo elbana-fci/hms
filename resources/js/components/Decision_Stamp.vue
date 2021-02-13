@@ -1,6 +1,6 @@
 <template>
 	<div>
-	    <div v-if="!editing" class="row justify-content-center">
+	    <div class="row justify-content-center">
 	        <div class="col-md-12">
 	            <div class="card">
 	                <div class="card-header">
@@ -30,11 +30,7 @@
 	                            </select>
 	                        </div>
 	                        <div class="form-group">
-	                            <label for="decisionContent" class="item-dir">صياغة القرار</label>
-	                            <textarea type="text" name="decision_content" required id="decisionContent" v-model="decision_content" class="form-control ckeditor"></textarea>
-	                        </div>
-	                        <div class="form-group">
-	                            <button type="submit" class="btn btn-primary">أضف قرار</button>
+	                            <button type="submit" class="btn btn-outline-primary btn-lg">أضف قرار</button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -53,12 +49,6 @@
 
 	                <div class="card-body">
 	                    <form @submit.prevent="addPenalty" method="post">
-	                    	<ul v-for="(pen, index) in penalties">
-	                    			<li>{{pens[index].penalty}}</li>
-		                    		<ul v-for="item in pen">
-		                    			<li>{{item.name}}</li>
-		                    		</ul>
-	                    	</ul>
 	                        <div class="form-group">
 	                            <label for="employee-n">الموظفين</label>
 	                            <select name="employee-n" id="employee-n" v-model="selected" multiple="" class="form-control">
@@ -75,9 +65,7 @@
 	                            <input type="text" name="penalty_reason" id="employee-name" v-model="penalty_reason" class="form-control">
 	                        </div>
 	                        <div class="form-group">
-	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء</button>
-	                            <button v-if="penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء آخر</button>
-	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-danger">انتهى</button>
+	                            <button type="submit" :disabled="!decision_id" class="btn btn-outline-primary btn-lg">أضف جزاء</button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -88,77 +76,16 @@
 </template>
 <script>
 export default {
-	props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
+	props: [],
 
-	methods: {
-
-		fetch (endpoint) {
-			axios.get(endpoint)
-			.then(res => {
-				this.employees.push(...res.data);	
-        });
-			
-		},
-
-		addDecision () {
-			axios.post(`/decisions`, {
-				decision_number: this.decision_number,
-				judgement_number: this.judgement_number,
-				decision_date: this.decision_date,
-				issuing_authority: this.decision.issuing_authority,
-				decision_content: CKEDITOR.instances.decisionContent.getData()
-			})
-			.then(res => {
-				this.decision_id = res.data.decision['id'];
-				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
-				this.editing = true;
-			}).catch(err => {
-				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
-			});
-
-		},
-
-		addPenalty () {
-			axios.post(`/penalties`, {
-				penalty: this.penalty,
-				penalty_reason: this.penalty_reason,
-				user_id: 1,
-				decision_id: this.decision_id,
-				empIDs: this.selected
-			})
-			.then(res => {
-				this.selected = "";
-				this.penalty = "";
-				this.penalty_reason = "";
-				this.penalties.push(res.data.PenEmp);
-				this.pens.push(res.data.penalty);
-				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
-			}).catch(err => {
-				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
-			});
-		}
-	},
+	
 
 	data () {
 		return {
-			decision: {
-				issuing_authority: ''
-			},
-			editing: false,
-			issuing_authority: ['المستشفى','الإدارة', 'المديرية'],
-			employees: [],
-			selected: [],
-			penalties: [],
-			pens: []
+			
 		}
 	},
 
-	created () {
-		this.fetch(`/getAllEmployees`);
-	},
-
-	computed: {
-
-	}
+	
 }
 </script>

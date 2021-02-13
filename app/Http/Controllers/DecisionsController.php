@@ -41,6 +41,7 @@ class DecisionsController extends Controller
      */
     public function store(AddDecisionRequest $request)
     {
+        
         $decision = $request->user()->decisions()->create($request->all());
         
         if($request->expectsJson()){
@@ -62,7 +63,9 @@ class DecisionsController extends Controller
      */
     public function show(Decision $decision)
     {
-        //
+        $decision = Decision::find($decision->id);
+        $employees = $decision->employees;
+        return view('decisions.show', compact('employees','decision'));
     }
 
     /**

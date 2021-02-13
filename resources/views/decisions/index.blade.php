@@ -26,6 +26,7 @@
                                     <th scope="col">{{ __('dec.judgement-number') }}</th>
                                     <th scope="col">{{ __('dec.decision-date') }}</th>
                                     <th scope="col">{{ __('dec.issuing-authority') }}</th>
+                                    <th scope="col">{{ __('dec.stamp') }}</th>
                                     <th scope="col">{{ __('dec.control') }}</th>
                                 </tr>
                             </thead>
@@ -38,9 +39,10 @@
                                         <td>{{ $decision->judgement_number }}</td>
                                         <td>{{ $decision->decision_date }}</td>
                                         <td>{{ $decision->issuing_authority }}</td>
+                                        <td><a href="{{ route('decisions.show', $decision->id) }}">{{ __('dec.show-btn') }}</a></td>
                                         <td>
-                                            <a href="">Edit</a>
-                                            <a href="">Delete</a>
+                                            <a href="" class="btn btn-sm btn-primary">{{ __('dec.edit-btn') }}</a>
+                                            <a href="" class="btn btn-sm btn-danger">{{ __('dec.delete-btn') }}</a>
                                         </td>
                                     </tr>
                                     <?php $i++ ?>
