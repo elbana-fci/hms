@@ -29,6 +29,9 @@ require __DIR__.'/auth.php';
 Route::get('employeeRecords/{id}', [EmployeesController::class, 'employeeRecords'])
 ->middleware(['auth'])->name('employeeRecords');
 
+Route::get('getPenaltiesByDecID/{id}', [PenaltiesController::class, 'getPenaltiesByDecID'])
+->middleware(['auth'])->name('getPenaltiesByDecID');
+
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
 
 Route::resource('employees', EmployeesController::class)->middleware(['auth']);

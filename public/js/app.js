@@ -2029,6 +2029,299 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs', 'decision'],
+  methods: {
+    fetch: function fetch(endpoint) {
+      var _this = this;
+
+      axios.get(endpoint).then(function (res) {
+        var _this$employees;
+
+        (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
+
+        CKEDITOR.instances.decisionContent.setData(_this.decision.decision_content);
+      });
+    },
+    fetchPens: function fetchPens(endpoint) {
+      var _this2 = this;
+
+      axios.get(endpoint).then(function (res) {
+        _this2.penalties.push(res.data.penalties);
+      });
+    },
+    addDecision: function addDecision() {
+      var _this3 = this;
+
+      axios.post("/decisions", {
+        decision_number: this.decision_number,
+        judgement_number: this.judgement_number,
+        decision_date: this.decision_date,
+        issuing_authority: this.decision.issuing_authority,
+        decision_content: CKEDITOR.instances.decisionContent.getData()
+      }).then(function (res) {
+        _this3.decision_id = res.data.decision['id'];
+
+        _this3.$toast.success(res.data.message, "Success", {
+          timeout: 3000
+        });
+
+        _this3.editing = true;
+      })["catch"](function (err) {
+        _this3.$toast.error(err.response.data.message, "Error", {
+          timeout: 3000
+        });
+      });
+    },
+    addPenalty: function addPenalty() {
+      var _this4 = this;
+
+      axios.post("/penalties", {
+        penalty: this.penalty,
+        penalty_reason: this.penalty_reason,
+        user_id: 1,
+        decision_id: this.decision_id,
+        empIDs: this.selected
+      }).then(function (res) {
+        _this4.selected = "";
+        _this4.penalty = "";
+        _this4.penalty_reason = "";
+
+        _this4.penalties.push(res.data.PenEmp);
+
+        _this4.pens.push(res.data.penalty);
+
+        _this4.$toast.success(res.data.message, "Success", {
+          timeout: 3000
+        });
+      })["catch"](function (err) {
+        _this4.$toast.error(err.response.data.message, "Error", {
+          timeout: 3000
+        });
+      });
+    },
+    toggle: function toggle(item) {
+      if (this.show === item.id) {
+        this.show = false;
+      } else {
+        this.addPen = false;
+        this.edit = true;
+        this.show = item.id;
+        this.penalty_id = item.id;
+        this.penalty = item.penalty;
+        this.penalty_reason = item.penalty_reason;
+      }
+    },
+    reset: function reset() {
+      this.penalty = '';
+      this.penalty_reason = '';
+      this.addPen = true;
+      this.edit = false;
+    },
+    editPenalty: function editPenalty() {
+      this.beforeEditCache = {
+        penalty: this.penalty,
+        penalty_reason: this.penalty_reason
+      };
+    },
+    cancel: function cancel() {
+      this.penalty = this.beforeEditCache.penalty;
+      this.penalty_reason = this.beforeEditCache.penalty_reason;
+    },
+    updatePenalty: function updatePenalty() {
+      var _this5 = this;
+
+      axios.put("/penalties/".concat(this.penalty_id), {
+        penalty: this.penalty,
+        penalty_reason: this.penalty_reason,
+        decision_id: this.id,
+        empIDs: this.selected
+      }).then(function (res) {
+        _this5.penalty = res.data.penalty;
+
+        _this5.$toast.success(res.data.message, "Success", {
+          timeout: 3000
+        });
+      })["catch"](function (err) {
+        _this5.$toast.error(err.response.data.message, "Error", {
+          timeout: 3000
+        });
+      });
+    }
+  },
+  data: function data() {
+    return {
+      decision_number: this.decision.decision_number,
+      judgement_number: this.decision.judgement_number,
+      decision_date: this.decision.decision_date,
+      id: this.decision.id,
+      penalty_id: '',
+      beforeEditCache: {},
+      decision: {
+        issuing_authority: ''
+      },
+      editing: false,
+      edit: false,
+      show: false,
+      addPen: false,
+      issuing_authority: ['المستشفى', 'الإدارة', 'المديرية'],
+      employees: [],
+      selected: [],
+      penalties: [],
+      pens: []
+    };
+  },
+  created: function created() {
+    this.fetch("/getAllEmployees");
+    this.fetchPens("/getPenaltiesByDecID/".concat(this.id));
+  },
+  computed: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Penalty.vue?vue&type=script&lang=js& ***!
@@ -2206,6 +2499,7 @@ Vue.use((vue_izitoast__WEBPACK_IMPORTED_MODULE_0___default()));
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('decision', __webpack_require__(/*! ./components/Decision.vue */ "./resources/js/components/Decision.vue").default);
+Vue.component('editdecision', __webpack_require__(/*! ./components/EditDecision.vue */ "./resources/js/components/EditDecision.vue").default);
 Vue.component('penalty', __webpack_require__(/*! ./components/Penalty.vue */ "./resources/js/components/Penalty.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38033,6 +38327,45 @@ component.options.__file = "resources/js/components/Decision.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/EditDecision.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/EditDecision.vue ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditDecision.vue?vue&type=template&id=6c7c58f1& */ "./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1&");
+/* harmony import */ var _EditDecision_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditDecision.vue?vue&type=script&lang=js& */ "./resources/js/components/EditDecision.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _EditDecision_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__.render,
+  _EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EditDecision.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Penalty.vue":
 /*!*********************************************!*\
   !*** ./resources/js/components/Penalty.vue ***!
@@ -38088,6 +38421,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/EditDecision.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/EditDecision.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDecision_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditDecision.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDecision_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Penalty.vue?vue&type=script&lang=js&":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Penalty.vue?vue&type=script&lang=js& ***!
@@ -38117,6 +38466,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Decision_vue_vue_type_template_id_427bf747___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Decision_vue_vue_type_template_id_427bf747___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Decision.vue?vue&type=template&id=427bf747& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Decision.vue?vue&type=template&id=427bf747&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1& ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditDecision_vue_vue_type_template_id_6c7c58f1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./EditDecision.vue?vue&type=template&id=6c7c58f1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1&");
 
 
 /***/ }),
@@ -38600,6 +38966,696 @@ var staticRenderFns = [
       _c("div", { staticClass: "d-flex align-items-center" }, [
         _c("h2", [_vm._v("أضف جزاء")])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/EditDecision.vue?vue&type=template&id=6c7c58f1& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render,
+/* harmony export */   "staticRenderFns": () => /* binding */ staticRenderFns
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "decision-edit" }, [
+    !_vm.editing
+      ? _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: { method: "post" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addDecision($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "item-dir",
+                          attrs: { for: "decision-number" }
+                        },
+                        [_vm._v("رقم القرار")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.decision_number,
+                            expression: "decision_number"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          min: "0",
+                          max: "4294967295",
+                          name: "decision_number",
+                          required: "",
+                          id: "decision-number"
+                        },
+                        domProps: { value: _vm.decision_number },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.decision_number = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "judgement-number" } }, [
+                        _vm._v("رقم القضية")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.judgement_number,
+                            expression: "judgement_number"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          min: "0",
+                          max: "4294967295",
+                          name: "judgement_number",
+                          required: "",
+                          id: "judgement-number"
+                        },
+                        domProps: { value: _vm.judgement_number },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.judgement_number = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "decision-date" } }, [
+                        _vm._v("تاريخ القرار")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.decision_date,
+                            expression: "decision_date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "date",
+                          min: "0",
+                          max: "4294967295",
+                          name: "decision_date",
+                          required: "",
+                          id: "decision-date"
+                        },
+                        domProps: { value: _vm.decision_date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.decision_date = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "issuing-authority" } }, [
+                        _vm._v("جهة الاصدار")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.decision.issuing_authority,
+                              expression: "decision.issuing_authority"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "issuing_authority",
+                            id: "issuing-authority"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.decision,
+                                "issuing_authority",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.issuing_authority, function(authority) {
+                          return _c("option", [_vm._v(_vm._s(authority))])
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "item-dir",
+                          attrs: { for: "decisionContent" }
+                        },
+                        [_vm._v("صياغة القرار")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.decision_content,
+                            expression: "decision_content"
+                          }
+                        ],
+                        staticClass: "form-control ckeditor",
+                        attrs: {
+                          type: "text",
+                          name: "decision_content",
+                          required: "",
+                          id: "decisionContent"
+                        },
+                        domProps: { value: _vm.decision_content },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.decision_content = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "d-flex align-items-center" }, [
+              _c("h2", [_vm._v("تعديل جزاء")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary mr-auto",
+                  on: {
+                    click: function($event) {
+                      return _vm.reset()
+                    }
+                  }
+                },
+                [_vm._v("أضف جزاء")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _vm.addPen
+                ? _c(
+                    "form",
+                    {
+                      attrs: { method: "post" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.addPenalty($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "employee-n" } }, [
+                          _vm._v("الموظفين")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selected,
+                                expression: "selected"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "employee-n",
+                              id: "employee-n",
+                              multiple: ""
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selected = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.employees, function(employee) {
+                            return _c(
+                              "option",
+                              { domProps: { value: employee.id } },
+                              [_vm._v(_vm._s(employee.name))]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("h5", [_vm._v(_vm._s(_vm.selected))])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "employee-name" } }, [
+                          _vm._v("الجزاء")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newPenalty,
+                              expression: "newPenalty"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "penalty",
+                            id: "employee-name"
+                          },
+                          domProps: { value: _vm.newPenalty },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.newPenalty = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "employee-name" } }, [
+                          _vm._v("السبب")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newReason,
+                              expression: "newReason"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: "penalty_reason",
+                            id: "employee-name"
+                          },
+                          domProps: { value: _vm.newReason },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.newReason = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        !_vm.penalty_id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: !_vm.decision_id
+                                }
+                              },
+                              [_vm._v("أضف جزاء")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.penalty_id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: !_vm.decision_id
+                                }
+                              },
+                              [_vm._v("أضف جزاء آخر")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.penalty_id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                attrs: {
+                                  type: "submit",
+                                  disabled: !_vm.decision_id
+                                }
+                              },
+                              [_vm._v("انتهى")]
+                            )
+                          : _vm._e()
+                      ])
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.penalties, function(pen, index) {
+                return _c(
+                  "ul",
+                  { staticClass: "pens-list" },
+                  _vm._l(pen, function(item) {
+                    return _c("ul", [
+                      _c("li", [
+                        _c(
+                          "div",
+                          { staticClass: "d-flex align-items-center" },
+                          [
+                            _c("h5", [_vm._v(_vm._s(item.penalty))]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mr-auto" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.toggle(item)
+                                    }
+                                  }
+                                },
+                                [_vm._v("تعديل")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                { staticClass: "btn btn-sm btn-danger" },
+                                [_vm._v("حذف")]
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.show === item.id && _vm.edit
+                          ? _c(
+                              "form",
+                              {
+                                attrs: { method: "post" },
+                                on: {
+                                  submit: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.updatePenalty($event)
+                                  }
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "employee-n" } },
+                                    [_vm._v("الموظفين")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.selected,
+                                          expression: "selected"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: "employee-n",
+                                        id: "employee-n",
+                                        multiple: ""
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.selected = $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        }
+                                      }
+                                    },
+                                    _vm._l(_vm.employees, function(employee) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: employee.id } },
+                                        [_vm._v(_vm._s(employee.name))]
+                                      )
+                                    }),
+                                    0
+                                  ),
+                                  _vm._v(" "),
+                                  _c("h5", [_vm._v(_vm._s(_vm.selected))])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "employee-name" } },
+                                    [_vm._v("الجزاء")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.penalty,
+                                        expression: "penalty"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      name: "penalty",
+                                      id: "employee-name"
+                                    },
+                                    domProps: { value: _vm.penalty },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.penalty = $event.target.value
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "employee-name" } },
+                                    [_vm._v("السبب")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.penalty_reason,
+                                        expression: "penalty_reason"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "text",
+                                      name: "penalty_reason",
+                                      id: "employee-name"
+                                    },
+                                    domProps: { value: _vm.penalty_reason },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.penalty_reason = $event.target.value
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: {
+                                        type: "submit",
+                                        disabled: !_vm.id
+                                      }
+                                    },
+                                    [_vm._v("تعديل جزاء")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger",
+                                      attrs: {
+                                        type: "submit",
+                                        disabled: !_vm.id
+                                      }
+                                    },
+                                    [_vm._v("انتهى")]
+                                  )
+                                ])
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("h2", [_vm._v("تعديل قرار")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("أضف قرار")]
+      )
     ])
   }
 ]

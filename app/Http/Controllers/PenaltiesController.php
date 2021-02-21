@@ -131,6 +131,18 @@ class PenaltiesController extends Controller
         return $PenEmp;
     }
 
+    public function getPenaltiesByDecID($id)
+    {
+        $penalties = DB::table('penalties')->where('decision_id', $id)->get();
+
+     
+            return response()->json([
+                'message' => "Success",
+                'penalties' => $penalties
+            ]);
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -149,9 +161,40 @@ class PenaltiesController extends Controller
      * @param  \App\Models\Penalty  $penalty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Penalty $penalty)
+    public function update(AddPenaltyRequest $request, Penalty $penalty)
     {
-        //
+        $penalty->update($request->only('penalty', 'penalty_reason'));
+
+        $empIDs = $request->input('empIDs');
+
+        if(!empty($empIDs)){
+
+            $decision_id = $request->input('decision_id');
+
+            $employeesInDecision = DB::table('decision_employees')->select('employee_id')->where('decision_id', $decision_id)->get();
+
+            $empIDsArray = array();
+            foreach ($employeesInDecision as $emp) {
+                array_push($empIDsArray, $emp->employee_id);
+            }
+
+            $decision = Decision::find($decision_id);
+
+            $diff = array_diff($empIDs, $empIDsArray);
+            if(!empty($diff)){
+                $decision->employees()->attach($diff);
+            }
+
+            $penalty->employees()->sync($empIDs);
+
+        }
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Success",
+                'penalty' => $penalty->penalty
+            ]);
+        }
     }
 
     /**

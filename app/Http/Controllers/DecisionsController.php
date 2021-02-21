@@ -76,7 +76,8 @@ class DecisionsController extends Controller
      */
     public function edit(Decision $decision)
     {
-        //
+        $decision = Decision::find($decision->id);
+        return view('decisions.edit', compact('decision'));
     }
 
     /**

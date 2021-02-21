@@ -39,9 +39,13 @@
                                         <td>{{ $decision->judgement_number }}</td>
                                         <td>{{ $decision->decision_date }}</td>
                                         <td>{{ $decision->issuing_authority }}</td>
+                                        @if($decision->issuing_authority == "Hospital" || $decision->issuing_authority == "المستشفى")
                                         <td><a href="{{ route('decisions.show', $decision->id) }}">{{ __('dec.show-btn') }}</a></td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>
-                                            <a href="" class="btn btn-sm btn-primary">{{ __('dec.edit-btn') }}</a>
+                                            <a href="{{ route('decisions.edit', $decision->id) }}" class="btn btn-sm btn-primary">{{ __('dec.edit-btn') }}</a>
                                             <a href="" class="btn btn-sm btn-danger">{{ __('dec.delete-btn') }}</a>
                                         </td>
                                     </tr>
