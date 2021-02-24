@@ -18,7 +18,6 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('degree');
             $table->string('title');
-            $table->unsignedInteger('penalty')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

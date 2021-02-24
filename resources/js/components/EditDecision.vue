@@ -56,19 +56,18 @@
 
 	                	<form v-if="addPen" @submit.prevent="addPenalty" method="post">
 	                        <div class="form-group">
+	                            <label for="p-n">الجزاءات</label>
+	                            <select name="p-n" id="p-n" v-model="penalty" class="form-control">
+	                            	<option v-for="p in penalt" v-bind:value="p.id">{{ p.penalty }}</option>
+	                            </select>
+	                            <h5>{{ penalty }}</h5>
+	                        </div>
+	                        <div class="form-group">
 	                            <label for="employee-n">الموظفين</label>
 	                            <select name="employee-n" id="employee-n" v-model="selected" multiple="" class="form-control">
 	                            	<option v-for="employee in employees" v-bind:value="employee.id">{{ employee.name }}</option>
 	                            </select>
 	                            <h5>{{ selected }}</h5>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="employee-name">الجزاء</label>
-	                            <input type="text" name="penalty" id="employee-name" v-model="newPenalty" class="form-control">
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="employee-name">السبب</label>
-	                            <input type="text" name="penalty_reason" id="employee-name" v-model="newReason" class="form-control">
 	                        </div>
 	                        <div class="form-group">
 	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء</button>
@@ -96,14 +95,6 @@
 				                            <h5>{{ selected }}</h5>
 				                        </div>
 				                        <div class="form-group">
-				                            <label for="employee-name">الجزاء</label>
-				                            <input type="text" name="penalty" id="employee-name" v-model="penalty" class="form-control">
-				                        </div>
-				                        <div class="form-group">
-				                            <label for="employee-name">السبب</label>
-				                            <input type="text" name="penalty_reason" id="employee-name" v-model="penalty_reason" class="form-control">
-				                        </div>
-				                        <div class="form-group">
 				                            <button type="submit" :disabled="!id" class="btn btn-primary">تعديل جزاء</button>
 				                            <button type="submit" :disabled="!id" class="btn btn-danger">انتهى</button>
 				                        </div>
@@ -119,7 +110,7 @@
 </template>
 <script>
 export default {
-	props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs', 'decision'],
+	props: ['decision_id', 'penalty', 'employee_id', 'empIDs', 'decision'],
 
 	methods: {
 
@@ -128,6 +119,14 @@ export default {
 			.then(res => {
 				this.employees.push(...res.data);
 				CKEDITOR.instances.decisionContent.setData(this.decision.decision_content);	
+        });
+			
+		},
+
+		fetchP (endpoint) {
+			axios.get(endpoint)
+			.then(res => {
+				this.penalt.push(...res.data);	
         });
 			
 		},
@@ -161,7 +160,6 @@ export default {
 		addPenalty () {
 			axios.post(`/penalties`, {
 				penalty: this.penalty,
-				penalty_reason: this.penalty_reason,
 				user_id: 1,
 				decision_id: this.decision_id,
 				empIDs: this.selected
@@ -170,7 +168,6 @@ export default {
 				this.selected = "";
 				this.penalty = "";
 				this.penalty_reason = "";
-				this.penalties.push(res.data.PenEmp);
 				this.pens.push(res.data.penalty);
 				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
 			}).catch(err => {
@@ -212,8 +209,7 @@ export default {
 
 	    updatePenalty () {
 	    	axios.put(`/penalties/${this.penalty_id}`, {
-	    		penalty: this.penalty,
-	    		penalty_reason: this.penalty_reason,
+	    		penalty: this.penalty_id,
 	    		decision_id: this.id,
 	    		empIDs: this.selected
 	    	}).then(res => {
@@ -231,7 +227,6 @@ export default {
 			judgement_number: this.decision.judgement_number,
 			decision_date: this.decision.decision_date,
 			id: this.decision.id,
-			penalty_id: '',
 			beforeEditCache: {},
 			decision: {
 				issuing_authority: ''
@@ -244,13 +239,17 @@ export default {
 			employees: [],
 			selected: [],
 			penalties: [],
-			pens: []
+			pens: [],
+			penalt: [],
+			penalty: '',
 		}
 	},
 
 	created () {
 		this.fetch(`/getAllEmployees`);
+		this.fetchP(`/getAllPenalties`);
 		this.fetchPens(`/getPenaltiesByDecID/${this.id}`);
+		this.decision_id = this.id;
 	},
 
 	computed: {

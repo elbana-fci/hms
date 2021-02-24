@@ -1944,7 +1944,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs'],
   methods: {
@@ -1957,8 +1956,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         (_this$employees = _this.employees).push.apply(_this$employees, _toConsumableArray(res.data));
       });
     },
-    addDecision: function addDecision() {
+    fetchP: function fetchP(endpoint) {
       var _this2 = this;
+
+      axios.get(endpoint).then(function (res) {
+        var _this2$penalt;
+
+        (_this2$penalt = _this2.penalt).push.apply(_this2$penalt, _toConsumableArray(res.data));
+      });
+    },
+    addDecision: function addDecision() {
+      var _this3 = this;
 
       axios.post("/decisions", {
         decision_number: this.decision_number,
@@ -1967,42 +1975,41 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         issuing_authority: this.decision.issuing_authority,
         decision_content: CKEDITOR.instances.decisionContent.getData()
       }).then(function (res) {
-        _this2.decision_id = res.data.decision['id'];
+        _this3.decision_id = res.data.decision['id'];
 
-        _this2.$toast.success(res.data.message, "Success", {
+        _this3.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
 
-        _this2.editing = true;
+        _this3.editing = true;
       })["catch"](function (err) {
-        _this2.$toast.error(err.response.data.message, "Error", {
+        _this3.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
     },
     addPenalty: function addPenalty() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/penalties", {
         penalty: this.penalty,
-        penalty_reason: this.penalty_reason,
         user_id: 1,
         decision_id: this.decision_id,
         empIDs: this.selected
       }).then(function (res) {
-        _this3.selected = "";
-        _this3.penalty = "";
-        _this3.penalty_reason = "";
+        _this4.selected = "";
+        _this4.penalty = "";
+        _this4.penalty_reason = "";
 
-        _this3.penalties.push(res.data.PenEmp);
+        _this4.penalties.push(res.data.PenEmp);
 
-        _this3.pens.push(res.data.penalty);
+        _this4.pens.push(res.data.penalty);
 
-        _this3.$toast.success(res.data.message, "Success", {
+        _this4.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
       })["catch"](function (err) {
-        _this3.$toast.error(err.response.data.message, "Error", {
+        _this4.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
@@ -2018,11 +2025,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       employees: [],
       selected: [],
       penalties: [],
-      pens: []
+      pens: [],
+      penalt: [],
+      penalty: ''
     };
   },
   created: function created() {
     this.fetch("/getAllEmployees");
+    this.fetchP("/getAllPenalties");
   },
   computed: {}
 });
@@ -2162,17 +2172,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs', 'decision'],
+  props: ['decision_id', 'penalty', 'employee_id', 'empIDs', 'decision'],
   methods: {
     fetch: function fetch(endpoint) {
       var _this = this;
@@ -2185,15 +2186,24 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         CKEDITOR.instances.decisionContent.setData(_this.decision.decision_content);
       });
     },
-    fetchPens: function fetchPens(endpoint) {
+    fetchP: function fetchP(endpoint) {
       var _this2 = this;
 
       axios.get(endpoint).then(function (res) {
-        _this2.penalties.push(res.data.penalties);
+        var _this2$penalt;
+
+        (_this2$penalt = _this2.penalt).push.apply(_this2$penalt, _toConsumableArray(res.data));
+      });
+    },
+    fetchPens: function fetchPens(endpoint) {
+      var _this3 = this;
+
+      axios.get(endpoint).then(function (res) {
+        _this3.penalties.push(res.data.penalties);
       });
     },
     addDecision: function addDecision() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/decisions", {
         decision_number: this.decision_number,
@@ -2202,42 +2212,39 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         issuing_authority: this.decision.issuing_authority,
         decision_content: CKEDITOR.instances.decisionContent.getData()
       }).then(function (res) {
-        _this3.decision_id = res.data.decision['id'];
+        _this4.decision_id = res.data.decision['id'];
 
-        _this3.$toast.success(res.data.message, "Success", {
+        _this4.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
 
-        _this3.editing = true;
+        _this4.editing = true;
       })["catch"](function (err) {
-        _this3.$toast.error(err.response.data.message, "Error", {
+        _this4.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
     },
     addPenalty: function addPenalty() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/penalties", {
         penalty: this.penalty,
-        penalty_reason: this.penalty_reason,
         user_id: 1,
         decision_id: this.decision_id,
         empIDs: this.selected
       }).then(function (res) {
-        _this4.selected = "";
-        _this4.penalty = "";
-        _this4.penalty_reason = "";
+        _this5.selected = "";
+        _this5.penalty = "";
+        _this5.penalty_reason = "";
 
-        _this4.penalties.push(res.data.PenEmp);
+        _this5.pens.push(res.data.penalty);
 
-        _this4.pens.push(res.data.penalty);
-
-        _this4.$toast.success(res.data.message, "Success", {
+        _this5.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
       })["catch"](function (err) {
-        _this4.$toast.error(err.response.data.message, "Error", {
+        _this5.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
@@ -2271,21 +2278,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.penalty_reason = this.beforeEditCache.penalty_reason;
     },
     updatePenalty: function updatePenalty() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.put("/penalties/".concat(this.penalty_id), {
-        penalty: this.penalty,
-        penalty_reason: this.penalty_reason,
+        penalty: this.penalty_id,
         decision_id: this.id,
         empIDs: this.selected
       }).then(function (res) {
-        _this5.penalty = res.data.penalty;
+        _this6.penalty = res.data.penalty;
 
-        _this5.$toast.success(res.data.message, "Success", {
+        _this6.$toast.success(res.data.message, "Success", {
           timeout: 3000
         });
       })["catch"](function (err) {
-        _this5.$toast.error(err.response.data.message, "Error", {
+        _this6.$toast.error(err.response.data.message, "Error", {
           timeout: 3000
         });
       });
@@ -2297,7 +2303,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       judgement_number: this.decision.judgement_number,
       decision_date: this.decision.decision_date,
       id: this.decision.id,
-      penalty_id: '',
       beforeEditCache: {},
       decision: {
         issuing_authority: ''
@@ -2310,12 +2315,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       employees: [],
       selected: [],
       penalties: [],
-      pens: []
+      pens: [],
+      penalt: [],
+      penalty: ''
     };
   },
   created: function created() {
     this.fetch("/getAllEmployees");
+    this.fetchP("/getAllPenalties");
     this.fetchPens("/getPenaltiesByDecID/".concat(this.id));
+    this.decision_id = this.id;
   },
   computed: {}
 });
@@ -38778,6 +38787,49 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "p-n" } }, [_vm._v("الجزاءات")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.penalty,
+                          expression: "penalty"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "p-n", id: "p-n" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.penalty = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.penalt, function(p) {
+                      return _c("option", { domProps: { value: p.id } }, [
+                        _vm._v(_vm._s(p.penalty))
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("h5", [_vm._v(_vm._s(_vm.penalty))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "employee-n" } }, [
                     _vm._v("الموظفين")
                   ]),
@@ -38826,70 +38878,6 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("h5", [_vm._v(_vm._s(_vm.selected))])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "employee-name" } }, [
-                    _vm._v("الجزاء")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.penalty,
-                        expression: "penalty"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "penalty",
-                      id: "employee-name"
-                    },
-                    domProps: { value: _vm.penalty },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.penalty = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "employee-name" } }, [
-                    _vm._v("السبب")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.penalty_reason,
-                        expression: "penalty_reason"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "penalty_reason",
-                      id: "employee-name"
-                    },
-                    domProps: { value: _vm.penalty_reason },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.penalty_reason = $event.target.value
-                      }
-                    }
-                  })
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
@@ -39256,6 +39244,51 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "p-n" } }, [
+                          _vm._v("الجزاءات")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.penalty,
+                                expression: "penalty"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "p-n", id: "p-n" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.penalty = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.penalt, function(p) {
+                            return _c("option", { domProps: { value: p.id } }, [
+                              _vm._v(_vm._s(p.penalty))
+                            ])
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("h5", [_vm._v(_vm._s(_vm.penalty))])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "employee-n" } }, [
                           _vm._v("الموظفين")
                         ]),
@@ -39304,70 +39337,6 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("h5", [_vm._v(_vm._s(_vm.selected))])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "employee-name" } }, [
-                          _vm._v("الجزاء")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.newPenalty,
-                              expression: "newPenalty"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "penalty",
-                            id: "employee-name"
-                          },
-                          domProps: { value: _vm.newPenalty },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.newPenalty = $event.target.value
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "employee-name" } }, [
-                          _vm._v("السبب")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.newReason,
-                              expression: "newReason"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "penalty_reason",
-                            id: "employee-name"
-                          },
-                          domProps: { value: _vm.newReason },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.newReason = $event.target.value
-                            }
-                          }
-                        })
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
@@ -39523,74 +39492,6 @@ var render = function() {
                                   ),
                                   _vm._v(" "),
                                   _c("h5", [_vm._v(_vm._s(_vm.selected))])
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "employee-name" } },
-                                    [_vm._v("الجزاء")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.penalty,
-                                        expression: "penalty"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      name: "penalty",
-                                      id: "employee-name"
-                                    },
-                                    domProps: { value: _vm.penalty },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.penalty = $event.target.value
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "employee-name" } },
-                                    [_vm._v("السبب")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.penalty_reason,
-                                        expression: "penalty_reason"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      name: "penalty_reason",
-                                      id: "employee-name"
-                                    },
-                                    domProps: { value: _vm.penalty_reason },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.penalty_reason = $event.target.value
-                                      }
-                                    }
-                                  })
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "form-group" }, [

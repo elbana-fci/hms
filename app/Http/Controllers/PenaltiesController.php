@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penalty;
 use App\Models\Decision;
+use App\Models\PenaltyEmployee;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddPenaltyRequest;
 use Illuminate\Support\Facades\DB;
@@ -17,18 +18,12 @@ class PenaltiesController extends Controller
      */
     public function index()
     {
-        
-        $penalties = DB::table('penalties')
-        ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')
-        ->join('employees','employees.id','penalty_employees.employee_id')
-        ->join('decisions','penalties.decision_id','decisions.id')
-        ->select('decisions.judgement_number','decisions.decision_number','decisions.decision_date','employees.name','employees.title','penalties.penalty_reason','penalties.penalty','penalty_employees.execution_date','decisions.issuing_authority')
-        ->get();
-
-        //$penalties = json_decode($data);
+        $penalties = Penalty::All();
 
         return view('penalties.index', compact('penalties'));
- 
+
+        //retrive name only
+        
     }
 
     /**
@@ -51,42 +46,28 @@ class PenaltiesController extends Controller
      */
     public function store(AddPenaltyRequest $request)
     {
-        
-        $penalty = $request->user()->penalties()->create($request->except(['empIDs']));
-
-        $empIDs = $request->input('empIDs');
         $decision_id = $request->input('decision_id');
+        $penalty_id = $request->input('penalty');
+        $empIDs = $request->input('empIDs');
 
-        $employeesInDecision = DB::table('decision_employees')->select('employee_id')->where('decision_id', $decision_id)->get();
+        if(!empty($decision_id)) {
+            $decision = Decision::find($decision_id);
+            $decision->penalties()->attach($penalty_id);
 
-        $empIDsArray = array();
-        foreach ($employeesInDecision as $emp) {
-            array_push($empIDsArray, $emp->employee_id);
+            if(!empty($empIDs)) {
+                foreach ($empIDs as $id) {
+                    $flight = PenaltyEmployee::create(
+                        ['decision_id' => $decision_id, 'penalty_id' => $penalty_id, 'employee_id' => $id]
+                    );
+                }
+            }
+        }else {
+
+            $request->user()->penalties()->create($request->only('penalty', 'penalty_reason'));
+            return redirect()->route('penalties.index')->with('success', 'Your data has been submitted');
         }
-
-        $decision = Decision::find($decision_id);
-
-        $diff = array_diff($empIDs, $empIDsArray);
-        if(!empty($diff)){
-            $decision->employees()->attach($diff);
-        }
-
-        $penalty->employees()->attach($empIDs);
-
-        /*$gulty = DB::table('employees')
-                    ->whereIn('id', $empIDs)
-                    ->get();*/
-
-        $PenEmp = Penalty::find($penalty->id)->employees;
-
-
-        if($request->expectsJson()){
-            return response()->json([
-                'message' => "Success",
-                'penalty' => $penalty,
-                'PenEmp' => $PenEmp
-            ]);
-        }
+        
+        
     }
 
     /*public function getPenaltiesByDecision(){
@@ -120,20 +101,29 @@ class PenaltiesController extends Controller
             echo "not exist";
         } else{echo "exist";}*/
 
-        $decision_id = 1;
+        //$decision_id = 2;
 
-        $PenEmp = DB::table('penalties')
+        /*$PenEmp = DB::table('penalties')
         ->join('penalty_employees', 'penalty_employees.penalty_id', 'penalties.id')->where('decision_id', $decision_id)
         ->join('employees', 'employees.id', 'penalty_employees.employee_id')
         ->select('penalties.id', 'penalties.penalty', 'employees.name')
-        ->get()->groupBy('penalty');
+        ->get()->groupBy('penalty');*/
 
+        /*$PenEmp = DB::table('decision_penalties')->where('decision_id', $decision_id)
+                        ->join('penalties','penalties.id','decision_penalties.penalty_id')
+                        ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')
+                        ->join('employees','employees.id','penalty_employees.employee_id')
+                        ->select('penalties.id','penalties.penalty',DB::raw('employees.id as emp_id'),'employees.name')
+                        ->get();*/
+        $PenEmp = DecisionPenalty::where('decision_id', 4)->get();
         return $PenEmp;
     }
 
     public function getPenaltiesByDecID($id)
     {
-        $penalties = DB::table('penalties')->where('decision_id', $id)->get();
+        $penalties = DB::table('decision_penalties')->where('decision_id', $id)
+                        ->join('penalties','penalties.id','decision_penalties.penalty_id')
+                        ->get();
 
      
             return response()->json([
@@ -151,7 +141,8 @@ class PenaltiesController extends Controller
      */
     public function edit(Penalty $penalty)
     {
-        //
+        $penalty = Penalty::find($penalty->id);
+        return view('penalties.edit', compact('penalty'));
     }
 
     /**
@@ -163,38 +154,50 @@ class PenaltiesController extends Controller
      */
     public function update(AddPenaltyRequest $request, Penalty $penalty)
     {
-        $penalty->update($request->only('penalty', 'penalty_reason'));
-
+        
+        $decision_id = $request->input('decision_id');
+        $penalty_id = $request->input('penalty');
         $empIDs = $request->input('empIDs');
 
-        if(!empty($empIDs)){
-
-            $decision_id = $request->input('decision_id');
-
-            $employeesInDecision = DB::table('decision_employees')->select('employee_id')->where('decision_id', $decision_id)->get();
-
-            $empIDsArray = array();
-            foreach ($employeesInDecision as $emp) {
-                array_push($empIDsArray, $emp->employee_id);
+        if(!empty($decision_id)) {
+            if(!empty($empIDs)) {
+                foreach ($empIDs as $id) {
+                    $flight = PenaltyEmployee::updateOrCreate(
+                        ['decision_id' => $decision_id, 'penalty_id' => $penalty_id, 'employee_id' => $id],
+                        ['employee_id' => $id]
+                    );
+                }
             }
-
-            $decision = Decision::find($decision_id);
-
-            $diff = array_diff($empIDs, $empIDsArray);
-            if(!empty($diff)){
-                $decision->employees()->attach($diff);
-            }
-
-            $penalty->employees()->sync($empIDs);
-
         }
 
-        if($request->expectsJson()){
-            return response()->json([
-                'message' => "Success",
-                'penalty' => $penalty->penalty
-            ]);
+        else {
+            $penalty->update($request->all());
+            return redirect()->route('penalties.index')->with('success', 'Your data has been updated');
         }
+        
+    }
+
+    public function getAllPenalties()
+    {
+        $penalties = Penalty::All();
+
+        return $penalties;
+
+        //retrive name only
+    }
+
+    public function PenaltyRecords()
+    {
+        $penalties = DB::table('penalties')
+        ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')
+        ->join('employees','employees.id','penalty_employees.employee_id')
+        ->join('decisions','decisions.id','penalty_employees.decision_id')
+        ->select('decisions.judgement_number','decisions.decision_number','decisions.decision_date','employees.name','employees.title','penalties.penalty_reason','penalties.penalty','penalty_employees.execution_date','decisions.issuing_authority')
+        ->get();
+
+        //$penalties = json_decode($data);
+
+        return view('penalties.penaltyRecords', compact('penalties'));
     }
 
     /**

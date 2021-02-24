@@ -33,6 +33,8 @@ Route::get('getPenaltiesByDecID/{id}', [PenaltiesController::class, 'getPenaltie
 ->middleware(['auth'])->name('getPenaltiesByDecID');
 
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
+Route::get('getAllPenalties', [PenaltiesController::class, 'getAllPenalties']);
+Route::get('PenaltyRecords', [PenaltiesController::class, 'PenaltyRecords'])->name('PenaltyRecords');
 
 Route::resource('employees', EmployeesController::class)->middleware(['auth']);
 Route::resource('penalties', PenaltiesController::class)->middleware(['auth']);

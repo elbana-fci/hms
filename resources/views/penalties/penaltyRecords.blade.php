@@ -4,11 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12 penalties">
-            <div class="top-wrap">
-                <h2>{{ __('pen.penalties') }}</h2>
-                <a href="{{ route('penalties.create') }}" class="btn btn-primary mr-auto">{{ __('pen.add-btn') }}</a>
-            </div>
-            
+            <h2>{{ __('pen.penalties') }}</h2>
             <div class="card">
                 <div class="card-body">
                     @include('layouts._messages')
@@ -18,21 +14,40 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('pen.serial-number') }}</th>
+                                    <th scope="col">{{ __('pen.judgement-number') }}</th>
+                                    <th scope="col">{{ __('pen.decision-number') }}</th>
+                                    <th scope="col">{{ __('pen.decision-date') }}</th>
+                                    <th scope="col">{{ __('pen.gulty-name') }}</th>
+                                    <th scope="col">{{ __('pen.gulty-title') }}</th>
                                     <th scope="col">{{ __('pen.penalty-reason') }}</th>
                                     <th scope="col">{{ __('pen.penalty') }}</th>
-                                    <th scope="col">{{ __('pen.control') }}</th>
+                                    <th scope="col">{{ __('pen.execution-date') }}</th>
+                                    <th scope="col">{{ __('pen.issuing-authority') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 1; ?>
+                                <?php $i = 0; ?>
                                 @foreach($penalties as $penalty)
                                     <tr>
                                         <td>{{ $i }}</td>
+                                        <td>{{ $penalty->judgement_number }}</td>
+                                        <td>{{ $penalty->decision_number }}</td>
+                                        <td>{{ $penalty->decision_date }}</td>
+                                        <td>{{ $penalty->name }}</td>
+                                        <td>{{ $penalty->title }}</td>
                                         <td>{{ $penalty->penalty_reason }}</td>
                                         <td>{{ $penalty->penalty }}</td>
                                         <td>
-                                            <a href="{{ route('penalties.edit', $penalty->id) }}" class="btn btn-sm btn-primary">{{ __('pen.edit-btn') }}</a>
-                                            <a href="" class="btn btn-sm btn-danger">{{ __('pen.delete-btn') }}</a>
+                                            @if($penalty->execution_date)
+                                                <button type="button" data-toggle="modal" data-target="#exampleModal">
+                                                  {{ $penalty->execution_date }}
+                                                </button>
+                                            @else
+                                                <button type="button" data-toggle="modal" data-target="#exampleModal">
+                                                  {{ __('pen.execute') }}
+                                                </button>
+                                                <a href="{{ route('employees.edit', $penalty->penalty) }}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('pen.execute') }}</a>
+                                            @endif
                                         </td>
                                         <td>{{ $penalty->issuing_authority }}</td>
                                     </tr>

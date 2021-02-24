@@ -75,7 +75,7 @@ class EmployeesController extends Controller
 
         $penalties = DB::table('penalties')
         ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')->where('employee_id', $employeeID)
-        ->join('decisions', 'decisions.id', 'penalties.decision_id')
+        ->join('decisions', 'decisions.id', 'penalty_employees.decision_id')
         ->get();
 
         return view('employees.employeeRecords', compact('employee', 'penalties'));

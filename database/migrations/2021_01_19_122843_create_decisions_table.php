@@ -19,6 +19,7 @@ class CreateDecisionsTable extends Migration
             $table->unsignedInteger('judgement_number')->unique();
             $table->date('decision_date');
             $table->string('issuing_authority');
+            $table->text('decision_content');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

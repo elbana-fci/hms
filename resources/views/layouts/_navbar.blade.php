@@ -17,6 +17,9 @@
                     <a class="nav-link" href="{{ route('penalties.index') }}">{{ __('nav.penalties') }}</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('PenaltyRecords') }}">{{ __('nav.penaltyRecords') }}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('decisions.index') }}">{{ __('nav.decisions') }}</a>
                 </li>
             </ul>

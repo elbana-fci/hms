@@ -25,7 +25,6 @@ class AddPenaltyRequest extends FormRequest
     {
         return [
             'penalty'   => 'required',
-            'penalty_reason'  => 'required'
         ];
     }
 }

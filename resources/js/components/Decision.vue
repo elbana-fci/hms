@@ -59,20 +59,19 @@
 		                    			<li>{{item.name}}</li>
 		                    		</ul>
 	                    	</ul>
+	                    	<div class="form-group">
+	                            <label for="p-n">الجزاءات</label>
+	                            <select name="p-n" id="p-n" v-model="penalty" class="form-control">
+	                            	<option v-for="p in penalt" v-bind:value="p.id">{{ p.penalty }}</option>
+	                            </select>
+	                            <h5>{{ penalty }}</h5>
+	                        </div>
 	                        <div class="form-group">
 	                            <label for="employee-n">الموظفين</label>
 	                            <select name="employee-n" id="employee-n" v-model="selected" multiple="" class="form-control">
 	                            	<option v-for="employee in employees" v-bind:value="employee.id">{{ employee.name }}</option>
 	                            </select>
 	                            <h5>{{ selected }}</h5>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="employee-name">الجزاء</label>
-	                            <input type="text" name="penalty" id="employee-name" v-model="penalty" class="form-control">
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="employee-name">السبب</label>
-	                            <input type="text" name="penalty_reason" id="employee-name" v-model="penalty_reason" class="form-control">
 	                        </div>
 	                        <div class="form-group">
 	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء</button>
@@ -100,6 +99,14 @@ export default {
 			
 		},
 
+		fetchP (endpoint) {
+			axios.get(endpoint)
+			.then(res => {
+				this.penalt.push(...res.data);	
+        });
+			
+		},
+
 		addDecision () {
 			axios.post(`/decisions`, {
 				decision_number: this.decision_number,
@@ -121,7 +128,6 @@ export default {
 		addPenalty () {
 			axios.post(`/penalties`, {
 				penalty: this.penalty,
-				penalty_reason: this.penalty_reason,
 				user_id: 1,
 				decision_id: this.decision_id,
 				empIDs: this.selected
@@ -149,12 +155,15 @@ export default {
 			employees: [],
 			selected: [],
 			penalties: [],
-			pens: []
+			pens: [],
+			penalt: [],
+			penalty: '',
 		}
 	},
 
 	created () {
 		this.fetch(`/getAllEmployees`);
+		this.fetchP(`/getAllPenalties`);
 	},
 
 	computed: {

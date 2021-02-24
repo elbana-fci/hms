@@ -64,7 +64,13 @@ class DecisionsController extends Controller
     public function show(Decision $decision)
     {
         $decision = Decision::find($decision->id);
-        $employees = $decision->employees;
+
+        $employees = DB::table('penalty_employees')->where('decision_id', $decision->id)
+        ->join('employees','employees.id','penalty_employees.employee_id')
+        ->select('employees.name','employees.title','employees.degree','employee_id')->distinct('employee_id')
+        ->get();
+
+        //return $employees;
         return view('decisions.show', compact('employees','decision'));
     }
 

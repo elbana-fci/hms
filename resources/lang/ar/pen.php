@@ -3,6 +3,8 @@
 return [
 	'penalties' => "الجزاءات",
 	'add-btn' => "أضف جزاء",
+	'edit-btn' => "تعديل",
+	'delete-btn' => "حذف",
 	'serial-number' => "مسلسل",
 	'judgement-number' => "رقم القضية",
 	'decision-number' => "رقم القرار",
@@ -12,7 +14,9 @@ return [
 	'penalty-reason' => "سبب الجزاء",
 	'penalty' => "الجزاء الموقع",
 	'execution-date' => "تاريخ التنفيذ",
-	'issuing-authority' => "جهة الاصدار"
+	'issuing-authority' => "جهة الاصدار",
+	'execute' => "تنفيذ",
+	'control' => "التحكم"
 ]
 
 ?>

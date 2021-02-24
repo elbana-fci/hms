@@ -10925,7 +10925,8 @@ body {
   font-size: 1.6rem;
 }
 
-.employees .top-wrap {
+.employees .top-wrap,
+.penalties .top-wrap {
   display: flex;
   margin-bottom: 25px;
 }
@@ -10977,7 +10978,7 @@ body {
 .dec-stamp h3,
 .dec-stamp .title,
 .dec-stamp table {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .dec-stamp .title {
@@ -10986,6 +10987,11 @@ body {
 
 .dec-signs {
   font-weight: bold;
+}
+
+.dec-signs table th,
+.dec-signs table thead {
+  border: none;
 }
 
 .dec-stamp .table thead th {
