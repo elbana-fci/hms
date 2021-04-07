@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
+            <i class="fab fa-angular"></i>
             {{ __('nav.app-name') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -22,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('decisions.index') }}">{{ __('nav.decisions') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('decisions.index') }}"></a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -40,6 +44,7 @@
                         </li>
                     @endif
                 @else
+                <li class="nav-item"><a class="nav-link"><i class="far fa-bell"></i></a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}

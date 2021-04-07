@@ -31,6 +31,7 @@
 	                        </div>
 	                        <div class="form-group">
 	                            <label for="decisionContent" class="item-dir">صياغة القرار</label>
+	                            <p>وذلك لأنهم بوصفهم و دائرة عملهم قد خرجوا على مقتضى الواجب الوظيفي على النحو التالي</p>
 	                            <textarea type="text" name="decision_content" required id="decisionContent" v-model="decision_content" class="form-control ckeditor"></textarea>
 	                        </div>
 	                        <div class="form-group">

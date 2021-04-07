@@ -16,7 +16,7 @@ class DecisionsController extends Controller
      */
     public function index()
     {
-        $decisions = DB::table('decisions')->get();
+        $decisions = DB::table('decisions')->paginate(10);
         return view('decisions.index', compact('decisions'));
 
     }

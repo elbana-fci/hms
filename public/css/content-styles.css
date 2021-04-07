@@ -1,0 +1,12 @@
+.ck-content table{
+    direction: ltr !important;
+    text-align: center;
+    border: none;
+    font-size: 0.825rem;
+    margin-top: 35px;
+    width: 100% !important;
+}
+.ck-content th, .ck-content td {
+  border-bottom: 1px solid #ddd;
+  padding: 0.475rem;
+}

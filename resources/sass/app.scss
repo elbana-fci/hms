@@ -1,5 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap');
+
+// Font-Awesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
 
 // Variables
 @import 'variables';
@@ -10,8 +16,44 @@
 body{
 	direction: rtl;
 	text-align: right;
+	color: #5c6e91;
+	font-weight: bold;
 }
-
+ul{
+	margin: 0;
+	padding: 0;
+}
+.pagination{
+	margin-top: 30px;
+}
+.page-item.active .page-link{
+	background-color: #183153;
+	border-color: #183153;
+}
+.bg-white{
+	background: linear-gradient(90deg, rgba(143,56,77,1) 30%, rgba(24,49,83,1) 70%);
+}
+.navbar{
+	padding: 1.25rem 1rem;
+}
+.navbar-expand-md .navbar-collapse{
+	margin-right: 20px;
+}
+.page-link{
+	border: none;
+    box-shadow: 0px 2px 4px 2px #f4f4f4;
+    color: #5c6e91;
+}
+.navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link{
+	color: #eaeaea;
+	font-weight: 600;
+    letter-spacing: 0.027rem;
+}
+.navbar-light .navbar-brand:hover,
+.navbar-light .navbar-nav .nav-link:hover
+{
+	color: #5c6e91;
+}
 .nav-dir{
 	margin-left: auto !important;
 }
@@ -21,17 +63,30 @@ body{
 .navbar-brand{
 	margin-right: 0;
 }
-.employees h2{
-	display: inline-block;
-	font-size: 1.6rem;
+.navbar-brand i{
+	vertical-align: middle;
+	margin-left: 3px;
 }
-.employees .top-wrap, .penalties .top-wrap{
+.main-heading{
+	display: inline-block;
+	font-size: 1.15rem;
+	margin-bottom: 0;
+    line-height: 1.6;
+    font-weight: bold;
+}
+.top-wrap{
+    padding: 15px 25px;
+    box-shadow: 0 5px 10px 4px #efefef;
 	display: flex;
-	margin-bottom: 25px;
+	margin-top: 15px;
+	margin-bottom: 30px;
+	background: #fff;
+}
+.top-wrap i{
+	margin-right: 10px;
 }
 .emp-records h1{
 	font-size: 15px;
-	font-weight: bold;
 	color: #777;
 	margin-top: 10px;
 	margin-bottom: 20px;
@@ -40,22 +95,25 @@ body{
 	text-align: right;
 	line-height: 1.5;
 }
+.table{
+	box-shadow: 0 5px 10px 4px #efefef;
+	color: #5c6e91;
+	letter-spacing: 0.022rem;
+}
 .table-dir{
 	text-align: center;
 }
-.penalties h2{
-	margin-bottom: 25px;
-}
 .card{
 	border: none;
-	box-shadow: 0 2px 4px #ececec;
+	background-color: #fff;
+	box-shadow: 0 5px 10px 4px #efefef;
 }
 .table thead th{
-	border-bottom: none;
+	
 	vertical-align: middle;
 }
 .table th, .table td{
-	border-top: none;
+	border-top: 0;
 	vertical-align: middle;
 	padding: 0.50rem;
 }
@@ -69,9 +127,6 @@ body{
 
 .dec-stamp .title{
 	font-size: 0.95rem;
-}
-.dec-signs{
-	font-weight: bold;
 }
 .dec-signs table th, .dec-signs table thead{
 	border: none;
@@ -94,4 +149,37 @@ body{
 	background: #f4f4f4;
 	padding: 5px;
 	margin-bottom: 5px;
+}
+.table td, .table th{
+    padding: 0.625rem;
+    vertical-align: middle!important;
+}
+.table thead th{
+	padding: 0.725rem 0.625rem;
+    background: #fff;
+    border-bottom: 0;
+}
+.table a{
+	color: #5c6e91;
+}
+.table-bordered thead td, .table-bordered thead th{
+    border-bottom: 0;
+}
+table tr:nth-child(2n+2){
+    background: #fff;
+}
+.dark-blue{
+	background-color: #5c6e91;
+	border: none;
+	border-radius: 0;
+	padding: 0.475rem 1.75rem;
+}
+.dark-blue:hover{
+	background: #183153;
+}
+.btn-exec{
+	
+}
+.control-icons a:nth-of-type(1){
+	margin-left: 5px;
 }

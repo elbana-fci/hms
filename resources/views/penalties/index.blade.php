@@ -5,45 +5,41 @@
     <div class="row justify-content-center">
         <div class="col-md-12 penalties">
             <div class="top-wrap">
-                <h2>{{ __('pen.penalties') }}</h2>
-                <a href="{{ route('penalties.create') }}" class="btn btn-primary mr-auto">{{ __('pen.add-btn') }}</a>
+                <h2 class="main-heading">{{ __('pen.penalties') }}</h2>
+                <a href="{{ route('penalties.create') }}" class="btn btn-primary dark-blue mr-auto">{{ __('pen.add-btn') }}<i class="fas fa-user-plus"></i></a>
             </div>
-            
-            <div class="card">
-                <div class="card-body">
-                    @include('layouts._messages')
-                    <div class="media">
-                        <div class="media-body">
-                        <table class="table table-striped table-dir">
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ __('pen.serial-number') }}</th>
-                                    <th scope="col">{{ __('pen.penalty-reason') }}</th>
-                                    <th scope="col">{{ __('pen.penalty') }}</th>
-                                    <th scope="col">{{ __('pen.control') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1; ?>
-                                @foreach($penalties as $penalty)
-                                    <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $penalty->penalty_reason }}</td>
-                                        <td>{{ $penalty->penalty }}</td>
-                                        <td>
-                                            <a href="{{ route('penalties.edit', $penalty->id) }}" class="btn btn-sm btn-primary">{{ __('pen.edit-btn') }}</a>
-                                            <a href="" class="btn btn-sm btn-danger">{{ __('pen.delete-btn') }}</a>
-                                        </td>
-                                        <td>{{ $penalty->issuing_authority }}</td>
-                                    </tr>
-                                    <?php $i++ ?>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            @include('layouts._messages')
+
+            <table class="table table-striped table-dir">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ __('pen.serial-number') }}</th>
+                        <th scope="col">{{ __('pen.penalty-reason') }}</th>
+                        <th scope="col">{{ __('pen.penalty') }}</th>
+                        <th scope="col">{{ __('pen.created_at') }}</th>
+                        <th scope="col">{{ __('pen.control') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    @foreach($penalties as $penalty)
+                        <tr>
+                            <td>{{ $i }}</td>
+                            <td>{{ $penalty->penalty_reason }}</td>
+                            <td>{{ $penalty->penalty }}</td>
+                            <td>{{ $penalty->created_at }}</td>
+                            <td>
+                                <a href="{{ route('penalties.edit', $penalty->id) }}"><i class="fas fa-pen"></i></a>
+                                <a href=""><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                            <td>{{ $penalty->issuing_authority }}</td>
+                        </tr>
+                        <?php $i++ ?>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $penalties->links() }}
         </div>
     </div>
 </div>

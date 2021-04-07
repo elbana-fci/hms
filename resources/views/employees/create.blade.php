@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-group">
                             @php 
-                                $titles = array('دكتور','صيدلي', 'موظف');
+                                $titles = array('صيدلي','طبيب بشري','طبيب أسنان','ممارس علاج طبيعي','ممرضة','أخصائي تمريض','فني أشعة','فني معمل','فني احصاء','موظف');
                             @endphp
                             <label for="employee-title">{{ __('emp.title') }}</label>
                             <select name="title" id="employee-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
@@ -59,7 +59,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">{{ __('emp.add-btn') }}</button>
+                            <button type="submit" class="btn btn-primary dark-blue btn-lg">{{ __('emp.add-btn') }}</button>
                         </div>
                     </form>
                 </div>

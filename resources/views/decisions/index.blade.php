@@ -4,59 +4,50 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h2>{{ __('dec.decisions') }}</h2>
-                        <div class="item-dir">
-                            <a href="{{ route('decisions.create') }}" class="btn btn-outline-secondary">{{ __('dec.add-btn') }}</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card-body">
-                    @include('layouts._messages')
-                    <div class="media">
-                        <div class="media-body">
-                        <table class="table table-striped table-dir">
-                            <thead>
-                                <tr>
-                                    <th scope="col">{{ __('dec.serial-number') }}</th>
-                                    <th scope="col">{{ __('dec.decision-number') }}</th>
-                                    <th scope="col">{{ __('dec.judgement-number') }}</th>
-                                    <th scope="col">{{ __('dec.decision-date') }}</th>
-                                    <th scope="col">{{ __('dec.issuing-authority') }}</th>
-                                    <th scope="col">{{ __('dec.stamp') }}</th>
-                                    <th scope="col">{{ __('dec.control') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 0; ?>
-                                @foreach($decisions as $decision)
-                                    <tr>
-                                        <th scope="row">{{ $i }}</th>
-                                        <td>{{ $decision->decision_number }}</td>
-                                        <td>{{ $decision->judgement_number }}</td>
-                                        <td>{{ $decision->decision_date }}</td>
-                                        <td>{{ $decision->issuing_authority }}</td>
-                                        @if($decision->issuing_authority == "Hospital" || $decision->issuing_authority == "المستشفى")
-                                        <td><a href="{{ route('decisions.show', $decision->id) }}">{{ __('dec.show-btn') }}</a></td>
-                                        @else
-                                        <td></td>
-                                        @endif
-                                        <td>
-                                            <a href="{{ route('decisions.edit', $decision->id) }}" class="btn btn-sm btn-primary">{{ __('dec.edit-btn') }}</a>
-                                            <a href="" class="btn btn-sm btn-danger">{{ __('dec.delete-btn') }}</a>
-                                        </td>
-                                    </tr>
-                                    <?php $i++ ?>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="top-wrap">
+                <h2 class="main-heading">{{ __('dec.decisions') }}</h2>
+                <a href="{{ route('decisions.create') }}" class="btn btn-primary dark-blue mr-auto">{{ __('dec.add-btn') }}</a>
             </div>
+            @include('layouts._messages')
+            <table class="table table-striped table-dir">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ __('dec.serial-number') }}</th>
+                        <th scope="col">{{ __('dec.decision-number') }}</th>
+                        <th scope="col">{{ __('dec.judgement-number') }}</th>
+                        <th scope="col">{{ __('dec.decision-date') }}</th>
+                        <th scope="col">{{ __('dec.issuing-authority') }}</th>
+                        <th scope="col">{{ __('dec.stamp') }}</th>
+                        <th scope="col">{{ __('dec.created_at') }}</th>
+                        <th scope="col">{{ __('dec.control') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    @foreach($decisions as $decision)
+                        <tr>
+                            <th scope="row">{{ $i }}</th>
+                            <td>{{ $decision->decision_number }}</td>
+                            <td>{{ $decision->judgement_number }}</td>
+                            <td>{{ $decision->decision_date }}</td>
+                            <td>{{ $decision->issuing_authority }}</td>
+                                @if($decision->issuing_authority == "Hospital" || $decision->issuing_authority == "المستشفى")
+                                <td><a href="{{ route('decisions.show', $decision->id) }}">{{ __('dec.show-btn') }}</a></td>
+                                @else
+                                <td>{{ __('dec.not_available') }}</td>
+                                @endif
+                                <td>{{ $decision->created_at }}</td>
+                            <td class="control-icons">
+                                <a href="{{ route('decisions.edit', $decision->id) }}"><i class="fas fa-pen"></i></a>
+                                <a href=""><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <?php $i++ ?>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $decisions->links() }}
         </div>
     </div>
 </div>

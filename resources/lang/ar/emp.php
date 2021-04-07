@@ -2,9 +2,11 @@
 
 return [
 	'All-Employees' => "كل الموظفين",
+	'serial' => "م",
 	'name' => "الاسم",
 	'degree' => "الدرجة",
 	'title' => "الوظيفة",
+	'created_at' => "تاريخ الإضافة",
 	'control' => "التحكم",
 	'add-btn' => "أضف موظف",
 	'edit-btn' => "تعديل",

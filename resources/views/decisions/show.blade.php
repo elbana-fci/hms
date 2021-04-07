@@ -25,20 +25,23 @@
                 @endforeach
             </tbody>
         </table>
+        
         <div class="col-md-12"><p class="title">وذلك لأنهم بوصفهم و دائرة عملهم قد خرجوا على مقتضى الواجب الوظيفي على <strong>النحو التالي</strong></p></div>
-        <div class="col-md-12 title">{!! $decision->decision_content !!}</div>
+        <div class="col-md-12 title ck-content">{!! $decision->decision_content !!}</div>
         <div class="col-md-12"><p class="title">تحريرأ في</p></div>
     </div>
     <div class="row justify-content-center dec-signs">
+        
             <table class="table table-borderless table-dir">
-            <thead>
-                <tr>
-                    <th scope="col">مسئول الجزاءات</th>
-                    <th scope="col">دير شئون العاملين</th>
-                    <th scope="col">مدير عام المستشفى</th>
-                </tr>
-            </thead>
-        </table>
+                <thead>
+                    <tr>
+                        <th scope="col">مسئول الجزاءات</th>
+                        <th scope="col">دير شئون العاملين</th>
+                        <th scope="col">مدير عام المستشفى</th>
+                    </tr>
+                </thead>
+            </table>
+        
     </div>
 </div>
 @endsection

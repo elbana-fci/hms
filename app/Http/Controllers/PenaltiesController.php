@@ -18,7 +18,7 @@ class PenaltiesController extends Controller
      */
     public function index()
     {
-        $penalties = Penalty::All();
+        $penalties = Penalty::latest()->paginate(3);
 
         return view('penalties.index', compact('penalties'));
 
@@ -193,7 +193,7 @@ class PenaltiesController extends Controller
         ->join('employees','employees.id','penalty_employees.employee_id')
         ->join('decisions','decisions.id','penalty_employees.decision_id')
         ->select('decisions.judgement_number','decisions.decision_number','decisions.decision_date','employees.name','employees.title','penalties.penalty_reason','penalties.penalty','penalty_employees.execution_date','decisions.issuing_authority')
-        ->get();
+        ->paginate(15);
 
         //$penalties = json_decode($data);
 
