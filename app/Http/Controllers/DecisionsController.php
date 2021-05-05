@@ -93,9 +93,16 @@ class DecisionsController extends Controller
      * @param  \App\Models\Decision  $decision
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Decision $decision)
+    public function update(AddDecisionRequest $request, Decision $decision)
     {
-        //
+        $decision->update($request->all());
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Success",
+                'decision' => $decision
+            ]);
+        }
     }
 
     /**

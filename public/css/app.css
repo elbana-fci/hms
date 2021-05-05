@@ -1,10 +1,7 @@
-@import url(https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap);
-@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=Cairo:wght@300;
 
-/*!
- * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
+400;600;700&display=swap);
+@charset "UTF-8";
 
 .fa,
 .fas,
@@ -6212,7 +6209,7 @@ section {
 body {
   margin: 0;
   font-family: "Cairo", sans-serif;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   font-weight: 400;
   line-height: 1.4;
   color: #212529;
@@ -6535,36 +6532,36 @@ h6,
 
 h1,
 .h1 {
-  font-size: 2.0625rem;
+  font-size: 2.1125rem;
 }
 
 h2,
 .h2 {
-  font-size: 1.65rem;
+  font-size: 1.69rem;
 }
 
 h3,
 .h3 {
-  font-size: 1.44375rem;
+  font-size: 1.47875rem;
 }
 
 h4,
 .h4 {
-  font-size: 1.2375rem;
+  font-size: 1.2675rem;
 }
 
 h5,
 .h5 {
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
 }
 
 h6,
 .h6 {
-  font-size: 0.825rem;
+  font-size: 0.845rem;
 }
 
 .lead {
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   font-weight: 300;
 }
 
@@ -6636,7 +6633,7 @@ mark,
 
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
 }
 
 .blockquote-footer {
@@ -8265,7 +8262,7 @@ pre code {
   width: 100%;
   height: calc(1.4em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   font-weight: 400;
   line-height: 1.4;
   color: #495057;
@@ -8352,14 +8349,14 @@ select.form-control:focus::-ms-value {
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1.5;
 }
 
 .col-form-label-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.5;
 }
 
@@ -8368,7 +8365,7 @@ select.form-control:focus::-ms-value {
   width: 100%;
   padding: 0.375rem 0;
   margin-bottom: 0;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   line-height: 1.4;
   color: #212529;
   background-color: transparent;
@@ -8385,7 +8382,7 @@ select.form-control:focus::-ms-value {
 .form-control-sm {
   height: calc(1.5em + 0.5rem + 2px);
   padding: 0.25rem 0.5rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -8393,7 +8390,7 @@ select.form-control:focus::-ms-value {
 .form-control-lg {
   height: calc(1.5em + 1rem + 2px);
   padding: 0.5rem 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -8481,7 +8478,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.4;
   color: #fff;
   background-color: rgba(56, 193, 114, 0.9);
@@ -8596,7 +8593,7 @@ textarea.form-control.is-valid {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.4;
   color: #fff;
   background-color: rgba(227, 52, 47, 0.9);
@@ -8774,7 +8771,7 @@ textarea.form-control.is-invalid {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 0.375rem 0.75rem;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   line-height: 1.4;
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -9452,7 +9449,7 @@ fieldset:disabled a.btn {
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -9460,7 +9457,7 @@ fieldset:disabled a.btn {
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -9547,7 +9544,7 @@ input[type=button].btn-block {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   color: #212529;
   text-align: left;
   list-style: none;
@@ -9758,7 +9755,7 @@ input[type=button].btn-block {
   display: block;
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   color: #6c757d;
   white-space: nowrap;
 }
@@ -10004,7 +10001,7 @@ input[type=button].btn-block {
   align-items: center;
   padding: 0.375rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   font-weight: 400;
   line-height: 1.4;
   color: #495057;
@@ -10032,7 +10029,7 @@ input[type=button].btn-block {
 .input-group-lg > .input-group-prepend > .btn,
 .input-group-lg > .input-group-append > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -10049,7 +10046,7 @@ input[type=button].btn-block {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -10083,7 +10080,7 @@ input[type=button].btn-block {
   position: relative;
   z-index: 1;
   display: block;
-  min-height: 1.155rem;
+  min-height: 1.183rem;
   padding-left: 1.5rem;
   -webkit-print-color-adjust: exact;
           color-adjust: exact;
@@ -10099,7 +10096,7 @@ input[type=button].btn-block {
   left: 0;
   z-index: -1;
   width: 1rem;
-  height: 1.0775rem;
+  height: 1.0915rem;
   opacity: 0;
 }
 
@@ -10141,7 +10138,7 @@ input[type=button].btn-block {
 
 .custom-control-label::before {
   position: absolute;
-  top: 0.0775rem;
+  top: 0.0915rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -10154,7 +10151,7 @@ input[type=button].btn-block {
 
 .custom-control-label::after {
   position: absolute;
-  top: 0.0775rem;
+  top: 0.0915rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -10212,7 +10209,7 @@ input[type=button].btn-block {
 }
 
 .custom-switch .custom-control-label::after {
-  top: calc(0.0775rem + 2px);
+  top: calc(0.0915rem + 2px);
   left: calc(-2.25rem + 2px);
   width: calc(1rem - 4px);
   height: calc(1rem - 4px);
@@ -10241,7 +10238,7 @@ input[type=button].btn-block {
   width: 100%;
   height: calc(1.4em + 0.75rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   font-weight: 400;
   line-height: 1.4;
   color: #495057;
@@ -10291,7 +10288,7 @@ input[type=button].btn-block {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
 }
 
 .custom-select-lg {
@@ -10299,7 +10296,7 @@ input[type=button].btn-block {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
 }
 
 .custom-file {
@@ -10663,10 +10660,10 @@ input[type=button].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.355625rem;
-  padding-bottom: 0.355625rem;
+  padding-top: 0.352125rem;
+  padding-bottom: 0.352125rem;
   margin-right: 1rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: inherit;
   white-space: nowrap;
 }
@@ -10708,7 +10705,7 @@ input[type=button].btn-block {
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
@@ -11418,7 +11415,7 @@ input[type=button].btn-block {
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
-  font-size: 1.03125rem;
+  font-size: 1.05625rem;
   line-height: 1.5;
 }
 
@@ -11434,7 +11431,7 @@ input[type=button].btn-block {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   line-height: 1.5;
 }
 
@@ -11659,7 +11656,7 @@ a.badge-dark.focus {
 }
 
 .alert-dismissible {
-  padding-right: 3.7375rem;
+  padding-right: 3.7675rem;
 }
 
 .alert-dismissible .close {
@@ -11808,7 +11805,7 @@ a.badge-dark.focus {
   height: 1rem;
   overflow: hidden;
   line-height: 0;
-  font-size: 0.61875rem;
+  font-size: 0.63375rem;
   background-color: #e9ecef;
   border-radius: 0.25rem;
 }
@@ -12223,7 +12220,7 @@ a.badge-dark.focus {
 
 .close {
   float: right;
-  font-size: 1.2375rem;
+  font-size: 1.2675rem;
   font-weight: 700;
   line-height: 1;
   color: #000;
@@ -12533,7 +12530,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -12658,7 +12655,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.721875rem;
+  font-size: 0.739375rem;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: padding-box;
@@ -12800,7 +12797,7 @@ a.close.disabled {
 .popover-header {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.825rem;
+  font-size: 0.845rem;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.3rem - 1px);
@@ -17051,7 +17048,7 @@ body {
   direction: rtl;
   text-align: right;
   color: #5c6e91;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 ul {
@@ -17089,8 +17086,7 @@ ul {
 .navbar-light .navbar-brand,
 .navbar-light .navbar-nav .nav-link {
   color: #eaeaea;
-  font-weight: 600;
-  letter-spacing: 0.027rem;
+  font-weight: 400;
 }
 
 .navbar-light .navbar-brand:hover,
@@ -17113,6 +17109,10 @@ ul {
 .navbar-brand i {
   vertical-align: middle;
   margin-left: 3px;
+}
+
+.nav-link i {
+  margin-left: 5px;
 }
 
 .main-heading {
@@ -17172,9 +17172,7 @@ ul {
 
 .table th,
 .table td {
-  border-top: 0;
   vertical-align: middle;
-  padding: 0.5rem;
 }
 
 .table-striped tbody tr:nth-of-type(2n+1) {
@@ -17208,16 +17206,24 @@ ul {
 .decision-edit .pens-list ul {
   padding: 0;
   margin: 0;
+  list-style: none;
+}
+
+.decision-edit .pens-list ul li i {
+  float: left;
 }
 
 .decision-edit .pens-list ul {
   list-style: none;
+  display: flex;
+  justify-content: space-between;
 }
 
 .decision-edit .pens-list ul li {
-  background: #f4f4f4;
-  padding: 5px;
-  margin-bottom: 5px;
+  background: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 7px;
+  width: 30%;
 }
 
 .table td,
@@ -17227,8 +17233,8 @@ ul {
 }
 
 .table thead th {
-  padding: 0.725rem 0.625rem;
-  background: #fff;
+  padding: 0.875rem 0.625rem;
+  background: #eee;
   border-bottom: 0;
 }
 
@@ -17242,7 +17248,7 @@ ul {
 }
 
 table tr:nth-child(2n+2) {
-  background: #fff;
+  background: #eee;
 }
 
 .dark-blue {
@@ -17258,6 +17264,26 @@ table tr:nth-child(2n+2) {
 
 .control-icons a:nth-of-type(1) {
   margin-left: 5px;
+}
+
+.form-row {
+  justify-content: space-between;
+}
+
+.form-row .form-group {
+  width: 24.25%;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 0.016rem;
+}
+
+.fa-check-circle {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #48bd5a;
 }
 
 

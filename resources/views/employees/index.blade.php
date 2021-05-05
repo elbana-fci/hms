@@ -9,7 +9,7 @@
                 <a href="{{ route('employees.create') }}" class="btn btn-primary dark-blue mr-auto">{{ __('emp.add-btn') }}<i class="fas fa-user-plus"></i></a>
             </div>
             @include('layouts._messages')
-            <table class="table table-striped table-dir">
+            <table class="table table-bordered table-dir">
                 <thead>
                     <tr>
                         <th scope="col">{{ __('emp.serial') }}</th>

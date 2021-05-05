@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <editdecision :decision="{{$decision}}" inline-template>
+    <editdecision :decision="{{$decision}}">
     </editdecision>
 </div>
 @endsection

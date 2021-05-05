@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-sm">
+                    <table class="table table-bordered table-sm">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

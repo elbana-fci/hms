@@ -10,7 +10,7 @@
 	                </div>
 
 	                <div class="card-body">
-	                    <form @submit.prevent="addDecision" method="post">
+	                    <form @submit.prevent="update" method="post">
 	                        <div class="form-group">
 	                            <label for="decision-number" class="item-dir">رقم القرار</label>
 	                            <input type="number" min="0" max="4294967295" name="decision_number" required id="decision-number" v-model="decision_number" class="form-control">
@@ -34,7 +34,7 @@
 	                            <textarea type="text" name="decision_content" required id="decisionContent" v-model="decision_content" class="form-control ckeditor"></textarea>
 	                        </div>
 	                        <div class="form-group">
-	                            <button type="submit" class="btn btn-primary">أضف قرار</button>
+	                            <button type="submit" class="btn btn-primary dark-blue">تعديل القرار</button>
 	                        </div>
 	                    </form>
 	                </div>
@@ -48,7 +48,7 @@
 	                <div class="card-header">
 	                    <div class="d-flex align-items-center">
 	                        <h2>تعديل جزاء</h2>
-	                        <button @click="reset()" class="btn btn-primary mr-auto">أضف جزاء</button>
+	                        <button @click="reset()" class="btn btn-primary dark-blue mr-auto">أضف جزاء</button>
 	                    </div>
 	                </div>
 
@@ -70,12 +70,35 @@
 	                            <h5>{{ selected }}</h5>
 	                        </div>
 	                        <div class="form-group">
-	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء</button>
-	                            <button v-if="penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary">أضف جزاء آخر</button>
-	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-danger">انتهى</button>
+	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary dark-blue">أضف جزاء</button>
+	                            <button v-if="penalty_id" type="submit" :disabled="!decision_id" class="btn btn-primary dark-blue">أضف جزاء آخر</button>
+	                            <button v-if="!penalty_id" type="submit" :disabled="!decision_id" class="btn btn-danger dark-blue">انتهى</button>
 	                        </div>
 	                    </form>
 
+
+	                    <li v-for="(items, index) in penalties" class="pens-list">
+	                    	<div class="card">
+	                    		<div class="card-header">
+			                    	<div class="d-flex align-items-center">
+								  		<h5>{{ index }} ({{ items[0].penalty }})</h5>
+								  		
+								  		<div class="mr-auto">
+		                    				<button @click="toggle(index)" class="btn btn-sm btn-primary">تعديل</button>
+		                    				<button class="btn btn-sm btn-danger">حذف</button>
+		                				</div>
+		                    		</div>
+	                    		</div>
+		                    	<div v-if="show === index && edit" class="card-body">
+								  <ul v-for="item in items" :item="item">
+								  	<li>{{item.name}}
+								  		<button @click="destroy(item.emp_id)" class="btn"><i class="fas fa-trash"></i></button>
+								  	</li>
+								  </ul>
+								</div>
+						  </div>
+						</li>
+<!--
 	                	<ul v-for="(pen, index) in penalties" class="pens-list">	
                     		<ul v-for="item in pen">
                     			<li>
@@ -102,6 +125,7 @@
                     			</li>
                     		</ul>
                     	</ul>
+                    -->
 	                </div>
 	            </div>
 	        </div>
@@ -110,7 +134,7 @@
 </template>
 <script>
 export default {
-	props: ['decision_id', 'penalty', 'employee_id', 'empIDs', 'decision'],
+	props: ['decision_id', 'penalty_id', 'employee_id', 'empIDs', 'decision', 'emp_id'],
 
 	methods: {
 
@@ -134,7 +158,8 @@ export default {
 		fetchPens (endpoint) {
 			axios.get(endpoint)
 			.then(res => {
-				this.penalties.push(res.data.penalties);
+				//this.penalties.push(res.data.penalties);
+				this.penalties = _.groupBy(res.data.penalties, "penalty_id");
         });
 
 		},
@@ -165,26 +190,20 @@ export default {
 				empIDs: this.selected
 			})
 			.then(res => {
-				this.selected = "";
-				this.penalty = "";
-				this.penalty_reason = "";
-				this.pens.push(res.data.penalty);
 				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
 			}).catch(err => {
 				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
 			});
 		},
 
-		toggle: function(item) {
-	      if (this.show === item.id){
+		toggle: function(index) {
+	      if (this.show === index){
 	      	this.show = false;
 	      }else{
 	      	this.addPen = false;
 	      	this.edit = true;
-	      	this.show = item.id;
-	      	this.penalty_id = item.id;
-	      	this.penalty = item.penalty;
-	      	this.penalty_reason = item.penalty_reason;
+	      	this.show = index;
+	      	this.penalty_id = index;
 	      }
 	    },
 
@@ -218,6 +237,40 @@ export default {
 			}).catch(err => {
 				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
 			});
+	    },
+
+	    edit(){
+	    	this.beforeEditCache = {
+
+	    	};
+	    },
+
+	    update(){
+	    	axios.put(`/decisions/${this.id}`, {
+	    		decision_number: this.decision.decision_number,
+				judgement_number: this.decision.judgement_number,
+				decision_date: this.decision.decision_date,
+				issuing_authority: this.decision.issuing_authority,
+				decision_content: CKEDITOR.instances.decisionContent.getData()
+	    	})
+	    	.then(res => {
+				this.$toast.success(res.data.message, "Success", { timeout: 3000 });
+			}).catch(err => {
+				this.$toast.error(err.response.data.message, "Error", { timeout: 3000 });
+			});
+	    },
+
+	    destroy(emp_id){
+	    	//console.log(this.id, this.penalty_id, emp_id);
+	    	if(confirm('Are you sure?')){
+	    		this.emp_id = emp_id;
+	    		axios.delete(`/deletePenaltyByDecID`, {params: { id: this.id, penalty_id: this.penalty_id, emp_id: this.emp_id }})
+	    		.then(res => {
+	    			$(this.$el).fadeOut(500, () => {
+	    				alert(res.data.message);
+	    			})
+	    		});
+	    	}
 	    }
 	},
 
@@ -239,9 +292,7 @@ export default {
 			employees: [],
 			selected: [],
 			penalties: [],
-			pens: [],
-			penalt: [],
-			penalty: '',
+			penalt: []
 		}
 	},
 
@@ -253,6 +304,10 @@ export default {
 	},
 
 	computed: {
+
+		endpoint(){
+			return `decisions`;
+		}
 
 	}
 }

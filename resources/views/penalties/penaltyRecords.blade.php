@@ -6,7 +6,7 @@
         <div class="col-md-12 penalties">
             <h2>{{ __('pen.penalties') }}</h2>
             @include('layouts._messages')
-            <table class="table table-striped table-dir">
+            <table class="table table-bordered table-dir">
                 <thead>
                     <tr>
                         <th scope="col">{{ __('pen.serial-number') }}</th>

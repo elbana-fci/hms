@@ -60,6 +60,12 @@ class PenaltiesController extends Controller
                         ['decision_id' => $decision_id, 'penalty_id' => $penalty_id, 'employee_id' => $id]
                     );
                 }
+
+                if($request->expectsJson()){
+                    return response()->json([
+                        'message' => "Success"
+                    ]);
+                }
             }
         }else {
 
@@ -121,16 +127,21 @@ class PenaltiesController extends Controller
 
     public function getPenaltiesByDecID($id)
     {
-        $penalties = DB::table('decision_penalties')->where('decision_id', $id)
+        /*$penalties = DB::table('decision_penalties')->where('decision_id', $id)
                         ->join('penalties','penalties.id','decision_penalties.penalty_id')
-                        ->get();
-
+                        ->get();*/
+        $penaltyEmps = DB::table('penalty_employees')->where('decision_id', $id)
+        ->join('penalties','penalties.id','penalty_employees.penalty_id')
+        ->join('employees', 'employees.id', 'penalty_employees.employee_id')
+        ->select('penalty_employees.penalty_id','penalties.penalty',DB::raw('employees.id as emp_id'),'employees.name')
+        ->get();
+                        
      
             return response()->json([
                 'message' => "Success",
-                'penalties' => $penalties
+                'penalties' => $penaltyEmps
             ]);
-
+        //return $penaltyEmps;
     }
 
     /**
@@ -209,5 +220,20 @@ class PenaltiesController extends Controller
     public function destroy(Penalty $penalty)
     {
         //
+    }
+
+    public function deletePenaltyByDecID(Request $request){
+       
+
+        $deletedEmp = DB::table('penalty_employees')->where([
+            ['decision_id', $request->id],
+            ['penalty_id', $request->penalty_id],
+            ['employee_id', $request->emp_id]
+        ])->delete();
+
+        return response()->json([
+                'message' => "Success",
+                'deletedEmp' => $deletedEmp
+            ]);
     }
 }

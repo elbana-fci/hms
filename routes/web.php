@@ -32,6 +32,9 @@ Route::get('employeeRecords/{id}', [EmployeesController::class, 'employeeRecords
 Route::get('getPenaltiesByDecID/{id}', [PenaltiesController::class, 'getPenaltiesByDecID'])
 ->middleware(['auth'])->name('getPenaltiesByDecID');
 
+Route::delete('deletePenaltyByDecID', [PenaltiesController::class, 'deletePenaltyByDecID'])
+->middleware(['auth'])->name('deletePenaltyByDecID');
+
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
 Route::get('getAllPenalties', [PenaltiesController::class, 'getAllPenalties']);
 Route::get('PenaltyRecords', [PenaltiesController::class, 'PenaltyRecords'])->name('PenaltyRecords');

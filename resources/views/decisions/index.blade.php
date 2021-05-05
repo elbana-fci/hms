@@ -10,7 +10,7 @@
                 <a href="{{ route('decisions.create') }}" class="btn btn-primary dark-blue mr-auto">{{ __('dec.add-btn') }}</a>
             </div>
             @include('layouts._messages')
-            <table class="table table-striped table-dir">
+            <table class="table table-bordered table-dir">
                 <thead>
                     <tr>
                         <th scope="col">{{ __('dec.serial-number') }}</th>

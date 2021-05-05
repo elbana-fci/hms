@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
 
 // Font-Awesome
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
@@ -17,7 +17,7 @@ body{
 	direction: rtl;
 	text-align: right;
 	color: #5c6e91;
-	font-weight: bold;
+	font-weight: 600;
 }
 ul{
 	margin: 0;
@@ -46,8 +46,7 @@ ul{
 }
 .navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link{
 	color: #eaeaea;
-	font-weight: 600;
-    letter-spacing: 0.027rem;
+	font-weight: 400;
 }
 .navbar-light .navbar-brand:hover,
 .navbar-light .navbar-nav .nav-link:hover
@@ -66,6 +65,9 @@ ul{
 .navbar-brand i{
 	vertical-align: middle;
 	margin-left: 3px;
+}
+.nav-link i{
+	margin-left: 5px;
 }
 .main-heading{
 	display: inline-block;
@@ -109,13 +111,10 @@ ul{
 	box-shadow: 0 5px 10px 4px #efefef;
 }
 .table thead th{
-	
 	vertical-align: middle;
 }
 .table th, .table td{
-	border-top: 0;
 	vertical-align: middle;
-	padding: 0.50rem;
 }
 .table-striped tbody tr:nth-of-type(2n+1){
 	background-color: #f8f9fa;
@@ -140,23 +139,29 @@ ul{
 .decision-edit .pens-list, .decision-edit .pens-list ul{
 	padding:0;
 	margin:0;
-}
-.decision-edit .pens-list ul{
-
 	list-style: none;
 }
+.decision-edit .pens-list ul li i{
+	float: left;
+}
+.decision-edit .pens-list ul{
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+}
 .decision-edit .pens-list ul li{
-	background: #f4f4f4;
-	padding: 5px;
-	margin-bottom: 5px;
+	background: #f1f1f1;
+	padding: 10px;
+	margin-bottom: 7px;
+	width: 30%;
 }
 .table td, .table th{
     padding: 0.625rem;
     vertical-align: middle!important;
 }
 .table thead th{
-	padding: 0.725rem 0.625rem;
-    background: #fff;
+	padding: 0.875rem 0.625rem;
+    background: #eee;
     border-bottom: 0;
 }
 .table a{
@@ -166,7 +171,7 @@ ul{
     border-bottom: 0;
 }
 table tr:nth-child(2n+2){
-    background: #fff;
+    background: #eee;
 }
 .dark-blue{
 	background-color: #5c6e91;
@@ -182,4 +187,21 @@ table tr:nth-child(2n+2){
 }
 .control-icons a:nth-of-type(1){
 	margin-left: 5px;
+}
+
+.form-row{
+	justify-content: space-between;
+}
+.form-row .form-group{
+	width: 24.25%;
+}
+.form-group label{
+	font-size: 12px;
+	font-weight: normal;
+	letter-spacing: 0.016rem;
+}
+.fa-check-circle{
+	font-size: 36px;
+	margin-bottom: 10px;
+	color: #48bd5a;
 }
