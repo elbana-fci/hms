@@ -16,11 +16,11 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest()->paginate(15);
+        //$employees = Employee::latest()->paginate(15);
 
         //return $employees;
 
-        return view('employees.index', compact('employees'));
+        return view('employees.index');
     }
 
     public function getAllEmployees()
@@ -53,8 +53,15 @@ class EmployeesController extends Controller
     public function store(AddEmployeeRequest $request)
     {
 
-        $request->user()->employees()->create($request->all());
-        return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
+        $employee = $request->user()->employees()->create($request->all());
+        //return redirect()->route('employees.index')->with('success', 'Your data has been submitted');
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "تم إضافة بيانات الموظف بنجاح",
+                'employee' => $employee
+            ]);
+        }
     }
 
     /**
@@ -101,8 +108,16 @@ class EmployeesController extends Controller
      */
     public function update(AddEmployeeRequest $request, Employee $employee)
     {
-        $employee->update($request->all());
-        return redirect()->route('employees.index')->with('success', 'Your data has been updated');
+        $updatedEmployee = $employee->update($request->all());
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "تم تعديل بيانات الموظف بنجاح",
+                'updatedEmployee' => $updatedEmployee
+            ]);
+        }
+
+        //return redirect()->route('employees.index')->with('success', 'Your data has been updated');
     }
 
     /**
@@ -114,5 +129,17 @@ class EmployeesController extends Controller
     public function destroy(Employee $employee)
     {
         //
+    }
+
+    public function findEmployee(Request $request)
+    {
+        $search = $request->input('q');
+        if($search){
+            $employees = Employee::where(function($query) use ($search){
+                $query->where('name','LIKE',"%$search%");
+            })->get();
+        }
+
+        return $employees;
     }
 }

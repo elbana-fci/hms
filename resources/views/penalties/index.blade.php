@@ -33,7 +33,6 @@
                                 <a href="{{ route('penalties.edit', $penalty->id) }}"><i class="fas fa-pen"></i></a>
                                 <a href=""><i class="fas fa-trash-alt"></i></a>
                             </td>
-                            <td>{{ $penalty->issuing_authority }}</td>
                         </tr>
                         <?php $i++ ?>
                     @endforeach

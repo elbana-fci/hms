@@ -1,7 +1,9 @@
-@import url(https://fonts.googleapis.com/css2?family=Cairo:wght@300;
-
-400;600;700&display=swap);
 @charset "UTF-8";
+
+/*!
+ * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 
 .fa,
 .fas,
@@ -17094,10 +17096,6 @@ ul {
   color: #5c6e91;
 }
 
-.nav-dir {
-  margin-left: auto !important;
-}
-
 .item-dir {
   margin-right: auto !important;
 }
@@ -17113,6 +17111,25 @@ ul {
 
 .nav-link i {
   margin-left: 5px;
+}
+
+.form-inline {
+  display: inline-block;
+  width: 48%;
+}
+
+.form-inline input {
+  border: 0;
+  background: #eee;
+  width: 80% !important;
+  border-radius: 0;
+}
+
+.form-inline button {
+  margin-right: 2px;
+  border-radius: 0;
+  border: 1px solid #ddd;
+  color: #ddd;
 }
 
 .main-heading {
@@ -17179,10 +17196,18 @@ ul {
   background-color: #f8f9fa;
 }
 
-.dec-stamp h3,
-.dec-stamp .title,
+.dec-stamp h3 {
+  margin-top: 15px;
+}
+
 .dec-stamp table {
-  margin-bottom: 1.5rem;
+  margin-top: 15px;
+  margin-bottom: 35px;
+}
+
+.dec-stamp h3,
+.dec-stamp .title {
+  margin-bottom: 25px;
 }
 
 .dec-stamp .title {
@@ -17284,6 +17309,49 @@ table tr:nth-child(2n+2) {
   font-size: 36px;
   margin-bottom: 10px;
   color: #48bd5a;
+}
+
+.employee-add {
+  margin-bottom: 30px;
+}
+
+.employee-add .form-row .form-group {
+  width: 24.25%;
+}
+
+.employee-add .form-row .form-group .dark-blue {
+  padding: 0.5rem 1rem;
+  margin-top: 20px;
+}
+
+.employee-add table {
+  margin-top: 50px;
+}
+
+.employees .control-icons a {
+  cursor: pointer;
+}
+
+.form-control {
+  height: calc(1.4em + 0.75rem + 4px) !important;
+}
+
+@media print {
+  .pagination {
+    display: none;
+  }
+}
+
+.modal-header p {
+  margin-top: 5px !important;
+}
+
+.modal-header .close span {
+  display: contents !important;
+}
+
+.modal-header .form-row .form-group {
+  width: 50% !important;
 }
 
 

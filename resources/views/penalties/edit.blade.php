@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <h2>{{ __('pen.add-btn') }}</h2>
+                        <h2>{{ __('pen.edit-btn') }}</h2>
                     </div>
                 </div>
 

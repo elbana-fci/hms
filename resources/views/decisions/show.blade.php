@@ -5,23 +5,27 @@
     <div class="row justify-content-center dec-stamp">
         <div class="col-md-12"><p class="title">محافظة الفيوم <br/>مديرية الشئون الصحية <br/>مستشفى طامية المركزي</p></div>
         <h3>قرار رقم [{{ $decision->decision_number}}] لسنة 2021</h3>
-        <div class="col-md-12"><p class="title">مدير عام المستشفى بعد الاطلاع على قانون الخدمة المدنية رقم 81 لسنة 2016 وعلى القضية المحلية رقم  [{{ $decision->judgement_number }}] والتي انتهت إلى قيد الواقعة مخالفة إدارية <br/>ضد كلأ من</p></div>
+        <div class="col-md-12"><p class="title">مدير عام المستشفى بعد الاطلاع على قانون الخدمة المدنية رقم 81 لسنة 2016 وعلى القضية المحلية رقم  [{{ $decision->judgement_number }}] والتي انتهت إلى قيد الواقعة مخالفة إدارية ضد كلأ من</p></div>
 
         <table class="table table-bordered table-dir">
             <thead>
                 <tr>
+                    <th scope="col">{{ __('emp.serial') }}</th>
                     <th scope="col">{{ __('emp.name') }}</th>
                     <th scope="col">{{ __('emp.title') }}</th>
                     <th scope="col">{{ __('emp.degree') }}</th>
                 </tr>
             </thead>
             <tbody>
+                <?php $i = 1; ?>
                 @foreach($employees as $employee)
                     <tr>
+                        <td>{{ $i }}</td>
                         <td>{{ $employee->name }}</td>
                         <td>{{ $employee->title }}</td>
                         <td>{{ $employee->degree }}</td>
                     </tr>
+                <?php $i++ ?>
                 @endforeach
             </tbody>
         </table>
@@ -36,12 +40,13 @@
                 <thead>
                     <tr>
                         <th scope="col">مسئول الجزاءات</th>
-                        <th scope="col">دير شئون العاملين</th>
+                        <th scope="col">مدير شئون العاملين</th>
                         <th scope="col">مدير عام المستشفى</th>
                     </tr>
                 </thead>
             </table>
         
     </div>
+    {{ $employees->links() }}
 </div>
 @endsection

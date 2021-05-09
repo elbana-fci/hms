@@ -6,7 +6,8 @@ return [
 	'penalties' => "الجزاءات",
 	'penaltyRecords' => "سجل الجزاءات",
 	'decisions' => "القرارات",
-	'logout' => "تسجيل الخروج"
+	'logout' => "تسجيل الخروج",
+	'search-btn' => "بحث"
 ]
 
 ?>

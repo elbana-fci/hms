@@ -18,7 +18,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/content-styles.css') }}" rel="stylesheet">
-
+    @stack('head')
 </head>
 <body>
     <div id="app">

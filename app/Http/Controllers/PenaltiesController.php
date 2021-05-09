@@ -7,6 +7,7 @@ use App\Models\Decision;
 use App\Models\PenaltyEmployee;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddPenaltyRequest;
+use App\Http\Requests\AddPenaltyEmployeeRequest;
 use Illuminate\Support\Facades\DB;
 
 class PenaltiesController extends Controller
@@ -18,7 +19,7 @@ class PenaltiesController extends Controller
      */
     public function index()
     {
-        $penalties = Penalty::latest()->paginate(3);
+        $penalties = Penalty::latest()->paginate(15);
 
         return view('penalties.index', compact('penalties'));
 
@@ -197,18 +198,47 @@ class PenaltiesController extends Controller
         //retrive name only
     }
 
+    public function getAllRecords(){
+        return view('penalties.penaltyRecords');
+    }
+
     public function PenaltyRecords()
     {
         $penalties = DB::table('penalties')
         ->join('penalty_employees','penalty_employees.penalty_id','penalties.id')
         ->join('employees','employees.id','penalty_employees.employee_id')
         ->join('decisions','decisions.id','penalty_employees.decision_id')
-        ->select('decisions.judgement_number','decisions.decision_number','decisions.decision_date','employees.name','employees.title','penalties.penalty_reason','penalties.penalty','penalty_employees.execution_date','decisions.issuing_authority')
+        ->select(DB::raw('decisions.id as dec_id'), DB::raw('penalties.id as pen_id'), DB::raw('employees.id as emp_id'),'decisions.judgement_number','decisions.decision_number','decisions.decision_date','employees.name','employees.title','penalties.penalty_reason','penalties.penalty','penalty_employees.execution_date','decisions.issuing_authority')
         ->paginate(15);
 
-        //$penalties = json_decode($data);
+        return $penalties;
 
-        return view('penalties.penaltyRecords', compact('penalties'));
+        //$penalties = json_decode($data);
+        /*return response()->json([
+            'message' => "Success",
+            'penalties' => $penalties
+        ]);*/
+           
+    }
+
+    public function setExecutionDate(AddPenaltyEmployeeRequest $request)
+    {
+        $dec_id = $request->decition_id;
+        $pen_id = $request->penalty_id;
+        $emp_id = $request->employee_id;
+        $exec_date = $request->execution_date;
+
+        $affected = DB::table('penalty_employees')->where([
+            ['decision_id', $dec_id],
+            ['penalty_id', $pen_id],
+            ['employee_id', $emp_id]
+        ])->update(['execution_date' => $exec_date]);
+
+        return response()->json([
+                'message' => "Success",
+                'affected' => $affected
+            ]);
+
     }
 
     /**

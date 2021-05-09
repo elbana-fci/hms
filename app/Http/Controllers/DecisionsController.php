@@ -68,7 +68,7 @@ class DecisionsController extends Controller
         $employees = DB::table('penalty_employees')->where('decision_id', $decision->id)
         ->join('employees','employees.id','penalty_employees.employee_id')
         ->select('employees.name','employees.title','employees.degree','employee_id')->distinct('employee_id')
-        ->get();
+        ->paginate(10);
 
         //return $employees;
         return view('decisions.show', compact('employees','decision'));

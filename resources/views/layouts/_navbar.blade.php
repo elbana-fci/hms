@@ -18,7 +18,7 @@
                     <a class="nav-link" href="{{ route('penalties.index') }}"><i class="fas fa-times-circle"></i>{{ __('nav.penalties') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('PenaltyRecords') }}"><i class="fas fa-clipboard"></i>{{ __('nav.penaltyRecords') }}</a>
+                    <a class="nav-link" href="{{ route('getAllRecords') }}"><i class="fas fa-clipboard"></i>{{ __('nav.penaltyRecords') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('decisions.index') }}"><i class="fas fa-gavel"></i>{{ __('nav.decisions') }}</a>
@@ -28,10 +28,12 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" onclick="event.preventDefault();">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model="search" @keyup.enter="searchit">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="searchit">Search</button>
-            </form>
+            <div class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="بحث" aria-label="Search" v-model="search" @keyup.enter="searchit">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="searchit">{{ __('nav.search-btn') }}</button>
+            </div>
+
+            
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav item-dir">

@@ -37,7 +37,11 @@ Route::delete('deletePenaltyByDecID', [PenaltiesController::class, 'deletePenalt
 
 Route::get('getAllEmployees', [EmployeesController::class, 'getAllEmployees']);
 Route::get('getAllPenalties', [PenaltiesController::class, 'getAllPenalties']);
+Route::get('getAllRecords', [PenaltiesController::class, 'getAllRecords'])->name('getAllRecords');
 Route::get('PenaltyRecords', [PenaltiesController::class, 'PenaltyRecords'])->name('PenaltyRecords');
+Route::get('findEmployee', [EmployeesController::class, 'findEmployee']);
+
+Route::patch('setExecutionDate/{emp_id}', [PenaltiesController::class, 'setExecutionDate']);
 
 Route::resource('employees', EmployeesController::class)->middleware(['auth']);
 Route::resource('penalties', PenaltiesController::class)->middleware(['auth']);

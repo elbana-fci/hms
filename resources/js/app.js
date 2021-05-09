@@ -25,10 +25,13 @@ window.Fire = new Vue();
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('decision', require('./components/Decision.vue').default);
 Vue.component('editdecision', require('./components/EditDecision.vue').default);
 Vue.component('penalty', require('./components/Penalty.vue').default);
+Vue.component('penaltyrecords', require('./components/PenaltyRecords.vue').default);
+Vue.component('addemployee', require('./components/AddEmployee.vue').default);
+Vue.component('employee', require('./components/Employee.vue').default);
 Vue.component('multiselect', Multiselect);
 Vue.component('search', require('./components/Search.vue').default);
 /**
@@ -39,23 +42,18 @@ Vue.component('search', require('./components/Search.vue').default);
 
 const app = new Vue({
     el: '#app',
-    data:{
-    	search: '',
-    	employees: {},
+    data(){
+        return{
+            search: ''
+        }
     },
+
     methods:{
     	searchit(){
     		Fire.$emit('searching');
     	}
     },
     created(){
-    	Fire.$on('searching', function(){
-    		let query = this.$root.$data.search;
-    		axios.get('/findEmployee?q' + query)
-    		.then((data) => {
-    			this.employees = data.data
-    		})
-    		.catch()
-    	})
+    	
     }
 });

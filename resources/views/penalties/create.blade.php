@@ -35,7 +35,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">{{ __('pen.edit-btn') }}</button>
+                            <button type="submit" class="btn btn-outline-primary btn-lg">{{ __('pen.add-btn') }}</button>
                         </div>
                     </form>
                 </div>
